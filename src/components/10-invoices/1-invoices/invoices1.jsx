@@ -374,9 +374,19 @@ export default function Invoices1() {
                         </div>
                         <div className="flex justify-center gap-2">
 
-                            <Link to="/escrow8" className='saveNext'>
+                            <Link
+
+                                //! here we made a comment to D-NONE THE NEXT LINK FOR ESCROW8 COMPONENT
+
+                                // to="/escrow8"
+
+
+                                className='saveNext'>
                                 <button className="backBtn   redClr font-semibold px-4 py-2 rounded-lg hover:bg-red-600">Back</button>
                             </Link>
+
+
+
                             <Link to="/wallets1" className='saveNext'>
                                 <button className=" redBtn redBg text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600">Next</button>
                             </Link>

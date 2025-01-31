@@ -157,7 +157,16 @@ export default function Accounts2() {
                             <Link to="/accounts1" className='saveNext'>
                                 <button className="backBtn   redClr font-semibold px-4 py-2 rounded-lg hover:bg-red-600">Back</button>
                             </Link>
-                            <Link to="/letters1" className='saveNext'>
+                            <Link
+
+                                //! here we made a comment to D-NONE THE NEXT LINK FOR LETTERS1 COMPONENT
+
+                                // to="/letters1"
+
+
+
+                                
+                                className='saveNext'>
                                 <button className=" redBtn redBg text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600">Save & Next</button>
                             </Link>
                         </div>

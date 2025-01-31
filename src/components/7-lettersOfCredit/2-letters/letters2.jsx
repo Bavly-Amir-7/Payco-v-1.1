@@ -187,7 +187,11 @@ export default function Letters2() {
                         </div>
                         <div className="flex justify-center gap-2">
 
-                            <Link to="/letters1" className='saveNext'>
+                            <Link
+                            
+                             to="/letters1"
+                             
+                             className='saveNext'>
                                 <button className="backBtn   redClr font-semibold px-4 py-2 rounded-lg hover:bg-red-600">Back</button>
                             </Link>
                             <Link to="/letters3" className='saveNext'>

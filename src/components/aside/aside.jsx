@@ -99,7 +99,7 @@ export default function Aside() {
 
 
 
-                    <Link to="/letters1" className="">
+                    <Link to="/letters1" className="d-none">
                         <li
                             className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname === '/letters1' ? 'asideBtns text-red-600' : 'text-gray-700 hover:text-red-600'}`}
                         >
@@ -118,7 +118,7 @@ export default function Aside() {
                         </li>
                     </Link>
 
-                    <Link to="/escrow1" className="">
+                    <Link to="/escrow1" className="d-none">
                         <li
                             className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/escrow') // Ensures active state for all /escrow paths
                                 ? 'asideBtns text-red-600'
@@ -300,7 +300,7 @@ export default function Aside() {
                         className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${activeLink === 'logout' ? 'asideBtns text-red-600' : 'text-gray-700 hover:text-red-600'}`}
                         onClick={() => handleLinkClick('logout')}
                     >
-                        <span className='pl-4'>LogOut</span>
+                        <span className='pl-4'>Logout</span>
 
                         <i style={{ marginLeft: "75px" }}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
