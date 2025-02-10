@@ -3,8 +3,14 @@ import { Link, useLocation } from 'react-router-dom';
 import "./aside.css";
 import image2 from "./../images/payco.png";
 import { AiOutlineMenu } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Aside() {
+    const navigate = useNavigate();  
+
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
     const [activeLink, setActiveLink] = useState(''); // Initialize state
 
@@ -18,6 +24,33 @@ export default function Aside() {
     const handleLinkClick = (link) => {
         setActiveLink(link); // Set the active link
     };
+
+    // 🔴 وظيفة تسجيل الخروج
+    const handleLogout = async () => {
+        try {
+            // 🗑 مسح التوكن من LocalStorage
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+
+            // 📨 إرسال طلب API لو عندك EndPoint للـ Logout
+            const response = await fetch("/api/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+            });
+            
+            if (!response.ok) throw new Error("Failed to logout!");
+
+            // 🔄 إعادة توجيه المستخدم لصفحة تسجيل الدخول
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout Error:", error);
+        }
+    };
+
+   
 
 
     return (
@@ -37,15 +70,15 @@ export default function Aside() {
                 {/* Sidebar Header */}
                 <Link to="/verfi1" className="">
 
-                <div className="p-4 flex justify-between items-center border-b">
-                    <img src={image2} alt="PAYCO logo" className="mb-4" width={"160px"} />
-                    <button
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="text-gray-600 hover:text-gray-900 lg:hidden"
-                    >
-                        <i className="fas fa-times"></i>
-                    </button>
-                </div>
+                    <div className="p-4 flex justify-between items-center border-b">
+                        <img src={image2} alt="PAYCO logo" className="mb-4" width={"160px"} />
+                        <button
+                            onClick={() => setIsSidebarOpen(false)}
+                            className="text-gray-600 hover:text-gray-900 lg:hidden"
+                        >
+                            <i className="fas fa-times"></i>
+                        </button>
+                    </div>
                 </Link>
 
                 {/* Menu Items */}
@@ -157,8 +190,8 @@ export default function Aside() {
                     <Link to="/invoices1" className="">
                         <li
                             className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/invoices') // Ensures active state for both /invoices1 and /invoices2
-                                    ? 'asideBtns text-red-600'
-                                    : 'text-gray-700 hover:text-red-600'
+                                ? 'asideBtns text-red-600'
+                                : 'text-gray-700 hover:text-red-600'
                                 }`}
                             onClick={() => handleLinkClick('invoices')}
                         >
@@ -296,27 +329,25 @@ export default function Aside() {
 
                     <Link to="/" className="">
 
-                    <li
-                        className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${activeLink === 'logout' ? 'asideBtns text-red-600' : 'text-gray-700 hover:text-red-600'}`}
-                        onClick={() => handleLinkClick('logout')}
-                    >
-                        <span className='pl-4'>Logout</span>
+                    <li onClick={handleLogout} className="flex items-center py-2 px-4 rounded-md cursor-pointer text-gray-700 hover:text-red-600 transition duration-150 mt-3">
 
-                        <i style={{ marginLeft: "75px" }}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clipPath="url(#clip0_3373_519)">
-                                    <path d="M22.8293 9.17143L18.9503 5.29243C18.7617 5.11027 18.5091 5.00948 18.2469 5.01176C17.9847 5.01403 17.7338 5.1192 17.5484 5.30461C17.363 5.49002 17.2579 5.74083 17.2556 6.00303C17.2533 6.26523 17.3541 6.51783 17.5363 6.70643L21.4153 10.5854C21.5305 10.703 21.6312 10.8339 21.7153 10.9754C21.7003 10.9754 21.6883 10.9674 21.6733 10.9674L5.98926 10.9994C5.72404 10.9994 5.46969 11.1048 5.28215 11.2923C5.09461 11.4799 4.98926 11.7342 4.98926 11.9994C4.98926 12.2646 5.09461 12.519 5.28215 12.7065C5.46969 12.8941 5.72404 12.9994 5.98926 12.9994L21.6673 12.9674C21.6953 12.9674 21.7183 12.9534 21.7453 12.9514C21.6566 13.1206 21.5441 13.2762 21.4113 13.4134L17.5323 17.2924C17.4367 17.3847 17.3606 17.495 17.3082 17.617C17.2557 17.739 17.2282 17.8702 17.227 18.003C17.2259 18.1358 17.2512 18.2675 17.3014 18.3904C17.3517 18.5133 17.426 18.6249 17.5199 18.7188C17.6138 18.8127 17.7254 18.887 17.8483 18.9373C17.9712 18.9875 18.1029 19.0128 18.2357 19.0117C18.3684 19.0105 18.4997 18.9829 18.6217 18.9305C18.7437 18.8781 18.854 18.8019 18.9463 18.7064L22.8253 14.8274C23.5751 14.0773 23.9964 13.0601 23.9964 11.9994C23.9964 10.9388 23.5751 9.92154 22.8253 9.17143H22.8293Z" fill="#374957" />
-                                    <path d="M7 22H5C4.20435 22 3.44129 21.6839 2.87868 21.1213C2.31607 20.5587 2 19.7956 2 19V5C2 4.20435 2.31607 3.44129 2.87868 2.87868C3.44129 2.31607 4.20435 2 5 2H7C7.26522 2 7.51957 1.89464 7.70711 1.70711C7.89464 1.51957 8 1.26522 8 1C8 0.734784 7.89464 0.48043 7.70711 0.292893C7.51957 0.105357 7.26522 0 7 0L5 0C3.67441 0.00158786 2.40356 0.528882 1.46622 1.46622C0.528882 2.40356 0.00158786 3.67441 0 5L0 19C0.00158786 20.3256 0.528882 21.5964 1.46622 22.5338C2.40356 23.4711 3.67441 23.9984 5 24H7C7.26522 24 7.51957 23.8946 7.70711 23.7071C7.89464 23.5196 8 23.2652 8 23C8 22.7348 7.89464 22.4804 7.70711 22.2929C7.51957 22.1054 7.26522 22 7 22Z" fill="#374957" />
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_3373_519">
-                                        <rect width="24" height="24" fill="white" />
-                                    </clipPath>
-                                </defs>
-                            </svg>
+                            <span className='pl-4'>Logout</span>
 
-                        </i>
-                    </li>
+                            <i style={{ marginLeft: "75px" }}>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clipPath="url(#clip0_3373_519)">
+                                        <path d="M22.8293 9.17143L18.9503 5.29243C18.7617 5.11027 18.5091 5.00948 18.2469 5.01176C17.9847 5.01403 17.7338 5.1192 17.5484 5.30461C17.363 5.49002 17.2579 5.74083 17.2556 6.00303C17.2533 6.26523 17.3541 6.51783 17.5363 6.70643L21.4153 10.5854C21.5305 10.703 21.6312 10.8339 21.7153 10.9754C21.7003 10.9754 21.6883 10.9674 21.6733 10.9674L5.98926 10.9994C5.72404 10.9994 5.46969 11.1048 5.28215 11.2923C5.09461 11.4799 4.98926 11.7342 4.98926 11.9994C4.98926 12.2646 5.09461 12.519 5.28215 12.7065C5.46969 12.8941 5.72404 12.9994 5.98926 12.9994L21.6673 12.9674C21.6953 12.9674 21.7183 12.9534 21.7453 12.9514C21.6566 13.1206 21.5441 13.2762 21.4113 13.4134L17.5323 17.2924C17.4367 17.3847 17.3606 17.495 17.3082 17.617C17.2557 17.739 17.2282 17.8702 17.227 18.003C17.2259 18.1358 17.2512 18.2675 17.3014 18.3904C17.3517 18.5133 17.426 18.6249 17.5199 18.7188C17.6138 18.8127 17.7254 18.887 17.8483 18.9373C17.9712 18.9875 18.1029 19.0128 18.2357 19.0117C18.3684 19.0105 18.4997 18.9829 18.6217 18.9305C18.7437 18.8781 18.854 18.8019 18.9463 18.7064L22.8253 14.8274C23.5751 14.0773 23.9964 13.0601 23.9964 11.9994C23.9964 10.9388 23.5751 9.92154 22.8253 9.17143H22.8293Z" fill="#374957" />
+                                        <path d="M7 22H5C4.20435 22 3.44129 21.6839 2.87868 21.1213C2.31607 20.5587 2 19.7956 2 19V5C2 4.20435 2.31607 3.44129 2.87868 2.87868C3.44129 2.31607 4.20435 2 5 2H7C7.26522 2 7.51957 1.89464 7.70711 1.70711C7.89464 1.51957 8 1.26522 8 1C8 0.734784 7.89464 0.48043 7.70711 0.292893C7.51957 0.105357 7.26522 0 7 0L5 0C3.67441 0.00158786 2.40356 0.528882 1.46622 1.46622C0.528882 2.40356 0.00158786 3.67441 0 5L0 19C0.00158786 20.3256 0.528882 21.5964 1.46622 22.5338C2.40356 23.4711 3.67441 23.9984 5 24H7C7.26522 24 7.51957 23.8946 7.70711 23.7071C7.89464 23.5196 8 23.2652 8 23C8 22.7348 7.89464 22.4804 7.70711 22.2929C7.51957 22.1054 7.26522 22 7 22Z" fill="#374957" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_3373_519">
+                                            <rect width="24" height="24" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+
+                            </i>
+                        </li>
                     </Link>
 
                 </ul>

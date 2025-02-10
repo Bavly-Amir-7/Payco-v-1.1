@@ -52,6 +52,8 @@ import Settings1 from './components/13-settings/1-settings/settings1';
 import Settings2 from './components/13-settings/2-settings/settings2';
 import Business3 from './components/4-businessVerfi/3-business3/businessPage3';
 import Calender from './components/calender/calender';
+import ForgetPasswordPage from './components/forgetPassword/forgetPassword';
+import ResetPasswordPage from './components/resetPassword/resetPassword';
 function App() {
   return (
     <>
@@ -105,6 +107,10 @@ function App() {
           <Route path="settings2" element={<Settings2/>} />
           <Route path="aside" element={<Aside/>} />
           <Route path="calender" element={<Calender/>} />
+          <Route path="/forget-password" element={<ForgetPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+
+
         </Routes>
     </>
   );
