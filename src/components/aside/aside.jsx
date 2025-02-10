@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Aside() {
-    const navigate = useNavigate();  
+    const navigate = useNavigate();
 
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State to control sidebar visibility
@@ -24,32 +24,45 @@ export default function Aside() {
     const handleLinkClick = (link) => {
         setActiveLink(link); // Set the active link
     };
-// 🔴 Logout function
-const handleLogout = async () => {
-    try {
-        // 🗑 Remove tokens from LocalStorage
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+    // 🔴 Logout function
+    const handleLogout = async () => {
+        try {
+            const accessToken = localStorage.getItem("accessToken"); // حفظ التوكن في متغير قبل الحذف
 
-        // 📨 Send API request if you have an endpoint for logout
-        const response = await fetch("/api/auth/logout", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-        });
-        
-        if (!response.ok) throw new Error("Failed to logout!");
+            // تحقق مما إذا كان هناك توكن قبل الإرسال
+            if (!accessToken) {
+                console.error("No access token found!");
+                navigate("/login");
+                return;
+            }
 
-        // 🔄 Redirect user to the login page
-        navigate("/login");
-    } catch (error) {
-        console.error("Logout Error:", error);
-    }
-};
+            // 📨 إرسال طلب API لتسجيل الخروج
+            const response = await fetch("/api/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${accessToken}`,
+                },
+            });
 
-   
+            if (!response.ok) {
+                throw new Error("Failed to logout!");
+            }
+
+            // 🗑 مسح التوكن بعد التأكد من نجاح الطلب
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("userEmail");
+
+            // 🔄 إعادة توجيه المستخدم لصفحة تسجيل الدخول
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout Error:", error);
+            alert("Failed to logout! Please try again.");
+        }
+    };
+
+
 
 
     return (
@@ -328,7 +341,7 @@ const handleLogout = async () => {
 
                     <Link to="/" className="">
 
-                    <li onClick={handleLogout} className="flex items-center py-2 px-4 rounded-md cursor-pointer text-gray-700 hover:text-red-600 transition duration-150 mt-3">
+                        <li onClick={handleLogout} className="flex items-center py-2 px-4 rounded-md cursor-pointer text-gray-700 hover:text-red-600 transition duration-150 mt-3">
 
                             <span className='pl-4'>Logout</span>
 
