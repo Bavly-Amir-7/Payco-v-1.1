@@ -299,7 +299,7 @@ export default function SignUpPage() {
                         <div className="text-center mt-4">
                             <span className="text-sm text-gray-500">
                                 Already have an account?{" "}
-                                <Link className="hover:text-red-700" to="/login">
+                                <Link className="hover:text-red-700" to="/">
                                     Sign in
                                 </Link>
                             </span>
