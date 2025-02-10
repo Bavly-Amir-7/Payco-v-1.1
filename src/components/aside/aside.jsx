@@ -24,31 +24,30 @@ export default function Aside() {
     const handleLinkClick = (link) => {
         setActiveLink(link); // Set the active link
     };
+// 🔴 Logout function
+const handleLogout = async () => {
+    try {
+        // 🗑 Remove tokens from LocalStorage
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
 
-    // 🔴 وظيفة تسجيل الخروج
-    const handleLogout = async () => {
-        try {
-            // 🗑 مسح التوكن من LocalStorage
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+        // 📨 Send API request if you have an endpoint for logout
+        const response = await fetch("/api/auth/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+        
+        if (!response.ok) throw new Error("Failed to logout!");
 
-            // 📨 إرسال طلب API لو عندك EndPoint للـ Logout
-            const response = await fetch("/api/auth/logout", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-                },
-            });
-            
-            if (!response.ok) throw new Error("Failed to logout!");
-
-            // 🔄 إعادة توجيه المستخدم لصفحة تسجيل الدخول
-            navigate("/login");
-        } catch (error) {
-            console.error("Logout Error:", error);
-        }
-    };
+        // 🔄 Redirect user to the login page
+        navigate("/login");
+    } catch (error) {
+        console.error("Logout Error:", error);
+    }
+};
 
    
 
