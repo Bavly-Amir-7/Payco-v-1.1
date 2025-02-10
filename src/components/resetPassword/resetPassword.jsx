@@ -13,12 +13,12 @@ export default function ResetPasswordPage() {
         e.preventDefault();
         setMessage(null);
         setError(null);
-
+    
         if (password !== confirmPassword) {
             setError("Passwords do not match");
             return;
         }
-
+    
         try {
             const response = await fetch("/api/auth/reset-password", {
                 method: "POST",
@@ -27,18 +27,28 @@ export default function ResetPasswordPage() {
                 },
                 body: JSON.stringify({ password, token }),
             });
-
-            const data = await response.json();
-
+    
+            const text = await response.text(); // Read raw response text
+    
+            console.log("Response text:", text); // Log response for debugging
+    
             if (!response.ok) {
-                throw new Error(data.message || "Failed to reset password");
+                throw new Error(`HTTP Error! Status: ${response.status}, Message: ${text}`);
             }
-
+    
+            if (!text) {
+                throw new Error("Empty response from server");
+            }
+    
+            const data = JSON.parse(text); // Convert to JSON only if valid
+    
             setMessage("Password has been successfully reset!");
         } catch (err) {
+            console.error("Reset Password Error:", err.message);
             setError(err.message);
         }
     };
+    
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">

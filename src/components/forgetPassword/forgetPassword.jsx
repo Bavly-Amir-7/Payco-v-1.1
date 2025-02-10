@@ -9,7 +9,7 @@ export default function ForgetPasswordPage() {
         e.preventDefault();
         setMessage(null);
         setError(null);
-
+    
         try {
             const response = await fetch("/api/auth/forgot-password", {
                 method: "POST",
@@ -18,18 +18,28 @@ export default function ForgetPasswordPage() {
                 },
                 body: JSON.stringify({ email }),
             });
-
-            const data = await response.json();
-
+    
+            const text = await response.text(); // Read response as text
+    
+            console.log("Response text:", text); // Debugging: log response
+    
             if (!response.ok) {
-                throw new Error(data.message || "Failed to send reset link");
+                throw new Error(`HTTP Error! Status: ${response.status}, Message: ${text}`);
             }
-
+    
+            if (!text) {
+                throw new Error("Empty response from server");
+            }
+    
+            const data = JSON.parse(text); // Convert to JSON only if valid
+    
             setMessage("A reset link has been sent to your email!");
         } catch (err) {
+            console.error("Forgot Password Error:", err.message);
             setError(err.message);
         }
     };
+    
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">

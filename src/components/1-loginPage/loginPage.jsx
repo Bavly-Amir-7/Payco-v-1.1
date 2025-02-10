@@ -19,7 +19,7 @@ export default function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
-
+    
         try {
             const response = await fetch("/api/auth/login", {
                 method: "POST",
@@ -28,24 +28,33 @@ export default function LoginPage() {
                 },
                 body: JSON.stringify({ email, password }),
             });
-
-            const data = await response.json();
-
+    
+            const text = await response.text(); // Get the raw response text
+    
+            console.log("Response text:", text); // Log the response to inspect it
+    
             if (!response.ok) {
-                throw new Error(data.message || "Login failed");
+                throw new Error(`HTTP Error! Status: ${response.status}, Message: ${text}`);
             }
-
-            // Store token if login is successful
+    
+            if (!text) {
+                throw new Error("Empty response from server");
+            }
+    
+            const data = JSON.parse(text); // Parse JSON after checking it's valid
+    
+            // Store tokens if login is successful
             localStorage.setItem("accessToken", data.accessToken);
             localStorage.setItem("refreshToken", data.refreshToken);
             localStorage.setItem("userEmail", data.email);
-
-            // Redirect to another page after successful login
+    
             navigate("/dashboard");
         } catch (err) {
+            console.error("Login Error:", err.message);
             setError(err.message);
         }
     };
+    
 
     const handleSignUpClick = () => {
         setShowTerms(true);

@@ -9,13 +9,13 @@ import Calender from '../../calender/calender';
 export default function Invoices1() {
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
-    const [isModalOpen2, setIsModalOpen2] = useState(false); // حالة لفتح وغلق المودال
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isModalOpen2, setIsModalOpen2] = useState(false); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
-        setIsModalOpen(false); // إغلاق المودال
+        setDateOfBirth(newDate); 
+        setIsModalOpen(false); 
     };
 
 

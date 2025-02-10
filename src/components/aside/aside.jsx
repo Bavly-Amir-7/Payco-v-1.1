@@ -27,16 +27,14 @@ export default function Aside() {
     // 🔴 Logout function
     const handleLogout = async () => {
         try {
-            const accessToken = localStorage.getItem("accessToken"); // حفظ التوكن في متغير قبل الحذف
+            const accessToken = localStorage.getItem("accessToken"); 
 
-            // تحقق مما إذا كان هناك توكن قبل الإرسال
             if (!accessToken) {
                 console.error("No access token found!");
                 navigate("/login");
                 return;
             }
 
-            // 📨 إرسال طلب API لتسجيل الخروج
             const response = await fetch("/api/auth/logout", {
                 method: "POST",
                 headers: {
@@ -49,12 +47,10 @@ export default function Aside() {
                 throw new Error("Failed to logout!");
             }
 
-            // 🗑 مسح التوكن بعد التأكد من نجاح الطلب
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("userEmail");
 
-            // 🔄 إعادة توجيه المستخدم لصفحة تسجيل الدخول
             navigate("/login");
         } catch (error) {
             console.error("Logout Error:", error);
@@ -165,7 +161,7 @@ export default function Aside() {
 
                     <Link to="/escrow1" className="d-none">
                         <li
-                            className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/escrow') // Ensures active state for all /escrow paths
+                            className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/escrow') 
                                 ? 'asideBtns text-red-600'
                                 : 'text-gray-700 hover:text-red-600'
                                 }`}
@@ -201,7 +197,7 @@ export default function Aside() {
 
                     <Link to="/invoices1" className="">
                         <li
-                            className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/invoices') // Ensures active state for both /invoices1 and /invoices2
+                            className={`flex items-center py-2 px-4 rounded-md transition duration-150 mt-3 ${location.pathname.startsWith('/invoices') 
                                 ? 'asideBtns text-red-600'
                                 : 'text-gray-700 hover:text-red-600'
                                 }`}
