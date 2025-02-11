@@ -31,11 +31,11 @@ export default function AccountVerification2() {
 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998");
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); 
-        setIsModalOpen(false); 
+        setDateOfBirth(newDate);
+        setIsModalOpen(false);
     };
     const [selectedCountry, setSelectedCountry] = useState('GB'); // Default to UK
     const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('GB');
@@ -115,7 +115,7 @@ export default function AccountVerification2() {
             setMessage('❌ Please enter a verification token.');
             return;
         }
-    
+
         try {
             const response = await fetch('/api/auth/verify-email', {
                 method: 'POST',
@@ -124,11 +124,11 @@ export default function AccountVerification2() {
                 },
                 body: JSON.stringify({ token: verificationToken }),
             });
-    
+
             const data = await response.json();
-    
+
             console.log('API Response:', response.status, response.statusText, data);
-    
+
             if (response.ok) {
                 setMessage('✅ Email verified successfully!');
             } else {
@@ -139,7 +139,7 @@ export default function AccountVerification2() {
             setMessage('❌ Error verifying email. Please try again.');
         }
     };
-    
+
     return (
         <>
             <div className="container-fluid">
@@ -247,7 +247,7 @@ export default function AccountVerification2() {
                                                         <div
                                                             className="iconGap flex items-center borderInput rounded p-2 cursor-pointer"
                                                             style={{ width: "100%" }}
-                                                            onClick={() => setIsModalOpen(true)} 
+                                                            onClick={() => setIsModalOpen(true)}
                                                         >
                                                             <input
                                                                 type="text"
@@ -283,7 +283,7 @@ export default function AccountVerification2() {
                                         <label className="block mb-2 text-sm">Email*</label>
                                         <div className="d-flex mail">
                                             <div className="mailArea labelStyles iconGap flex items-center borderInput rounded p-2 w-full">
-                                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <g clipPath="url(#clip0_3373_5338)">
                                                         <path d="M16.8442 6.07484L11.6512 1.09784C10.9475 0.401465 9.99799 0.00992606 9.00793 0.00782103C8.01787 0.00571601 7.06672 0.393214 6.36 1.08659L1.155 6.07484C0.790961 6.42547 0.501122 6.84569 0.302707 7.31055C0.104292 7.77541 0.00135017 8.27541 0 8.78084L0 14.2498C0.00119089 15.244 0.396661 16.1972 1.09966 16.9002C1.80267 17.6032 2.7558 17.9987 3.75 17.9998H14.25C15.2442 17.9987 16.1973 17.6032 16.9003 16.9002C17.6033 16.1972 17.9988 15.244 18 14.2498V8.78084C17.9987 8.27534 17.8957 7.77527 17.6971 7.31039C17.4986 6.84551 17.2085 6.42532 16.8442 6.07484ZM7.40925 2.15834C7.83453 1.73684 8.40971 1.50135 9.00848 1.5036C9.60725 1.50585 10.1806 1.74565 10.6027 2.17034L15.663 7.01834L10.5907 12.0913C10.162 12.5001 9.59236 12.7281 9 12.7281C8.40764 12.7281 7.83801 12.5001 7.40925 12.0913L2.33625 7.01834L7.40925 2.15834ZM16.5 14.2498C16.5 14.8466 16.2629 15.4189 15.841 15.8408C15.419 16.2628 14.8467 16.4998 14.25 16.4998H3.75C3.15326 16.4998 2.58097 16.2628 2.15901 15.8408C1.73705 15.4189 1.5 14.8466 1.5 14.2498V8.78084C1.50076 8.63525 1.51557 8.49008 1.54425 8.34734L6.34875 13.1518C7.05429 13.8505 8.00708 14.2424 9 14.2424C9.99292 14.2424 10.9457 13.8505 11.6512 13.1518L16.4557 8.34734C16.4844 8.49008 16.4992 8.63525 16.5 8.78084V14.2498Z" fill="#2D2D2D" />
                                                     </g>
@@ -326,19 +326,23 @@ export default function AccountVerification2() {
                                         <div className="phone-input-container w-100 ">
                                             {/* Country Selector */}
                                             <div className="phone-input-item flex items-center borderInput rounded p-2">
-                                                <i>{countries.length > 0 ? countries.find(country => country.code === selectedCountry)?.flag : ''}</i>
+                                                <i>
+                                                    {countries.length > 0 ? countries.find(country => country.code === selectedPhoneCountry)?.flag : ''}
+                                                </i>
+
                                                 <span>|</span>
                                                 <select
-                                                    value={selectedPhoneCountry}
-                                                    onChange={(e) => setSelectedPhoneCountry(e.target.value)}
-                                                    className="flex-1 outline-none text-sm w-full bg-transparent"
-                                                >
-                                                    {countries.map(country => (
-                                                        <option key={country.code} value={country.code}>
-                                                            {country.name} ({country.callingCode})
-                                                        </option>
-                                                    ))}
-                                                </select>
+    value={selectedPhoneCountry}
+    onChange={(e) => setSelectedPhoneCountry(e.target.value)}
+    className="flex-1 outline-none text-sm w-full bg-transparent"
+>
+    {countries.map(country => (
+        <option key={country.code} value={country.code}>
+            {country.name} ({country.callingCode})
+        </option>
+    ))}
+</select>
+
                                             </div>
 
                                             {/* Phone Number Input */}
@@ -449,7 +453,7 @@ export default function AccountVerification2() {
                                                 <span>|</span>
                                                 <select
                                                     value={selectedSecondCountry}
-                                                    onChange={handleSecondCountryChange} 
+                                                    onChange={handleSecondCountryChange}
                                                     className="flex-1 outline-none text-sm w-full bg-transparent"
                                                 >
                                                     {countries.map((country) => (
