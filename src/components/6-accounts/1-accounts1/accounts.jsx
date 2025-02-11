@@ -12,10 +12,10 @@ import SearchBar from '../../searchBar/searchBar';
 
 export default function Accounts1() {
 
-    const [عرضالرسم, تغييرعرضالرسم] = useState(true); // التحكم في إظهار الـ BarChart أو الصورة
+    const [chartWidth, chageChartWidth] = useState(true);
 
     const [عرضغيرموجود, تغييرعرض] = useState(false);
-    const [عملة, تغييرالعملة] = useState('Bitcoin');
+    const [coin, changeCoin] = useState('Bitcoin');
 
     const currencies = {
         Bitcoin: {
@@ -44,7 +44,7 @@ export default function Accounts1() {
         }
     };
 
-    const currency = currencies[عملة];
+    const currency = currencies[coin];
 
     const [year, setYear] = React.useState(2024);
 
@@ -102,8 +102,8 @@ export default function Accounts1() {
                                             {Object.keys(currencies).map((key) => (
                                                 <button
                                                     key={key}
-                                                    onClick={() => تغييرالعملة(key)}
-                                                    className={`px-3 py-1 rounded-full ${عملة === key ? 'bg-red-200 text-red-600' : 'text-gray-500'}`}
+                                                    onClick={() => changeCoin(key)}
+                                                    className={`px-3 py-1 rounded-full ${coin === key ? 'bg-red-200 text-red-600' : 'text-gray-500'}`}
                                                 >
                                                     {key}
                                                 </button>
@@ -172,7 +172,7 @@ export default function Accounts1() {
                                 <div className="bg-white p-6 rounded-lg border border-gray-200">
                                     <div className="flex justify-between items-center mb-3">
                                         <h2 className="text-xl font-bold mb-4">Balance Overview</h2>
-                                        <button className="text-gray-500" onClick={() => تغييرعرضالرسم(!عرضالرسم)}>View Details</button>
+                                        <button className="text-gray-500" onClick={() => chageChartWidth(!chartWidth)}>View Details</button>
                                     </div>
 
                                     <div className="flex mb-4 justify-between">
@@ -199,7 +199,7 @@ export default function Accounts1() {
                                     </div>
 
                                     <div className="flex justify-between items-end">
-                                        {عرضالرسم ? (
+                                        {chartWidth ? (
                                             <BarChart
                                                 xAxis={[
                                                     {

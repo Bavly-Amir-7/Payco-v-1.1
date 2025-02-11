@@ -9,11 +9,9 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 function Business3() {
 
 
-    // 🔹 تخزين الدول التي يتم جلبها من API
     const [countries, setCountries] = useState([]);
     const [countryCodes, setCountryCodes] = useState({});
 
-    // 🔹 تخزين الدول المختارة
     const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
     const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
     const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
