@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./business3.css";
 import { Link } from 'react-router-dom';
 import Aside from '../../aside/aside';
@@ -9,42 +9,41 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 function Business3() {
 
 
- const countries = [
-        {
-            code: 'UK',
-            name: 'United Kingdom',
-            flag: (
-                <svg
-                    className="w-6 h-4"
-                    viewBox="0 0 24 18"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <rect width="24" height="18" fill="#012169" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="white" strokeWidth="3" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="#C8102E" strokeWidth="1.5" />
-                    <path d="M10.5 0H13.5V18H10.5V0ZM0 7.5V10.5H24V7.5H0Z" fill="white" />
-                    <path d="M11.25 0H12.75V18H11.25V0ZM0 8.25V9.75H24V8.25H0Z" fill="#C8102E" />
-                </svg>
-            ),
-        },
-        { code: 'EG', name: 'Egypt', flag: <img src="https://flagcdn.com/w40/eg.png" alt="Egypt" className="w-6 h-4" /> },
-        { code: 'US', name: 'USA', flag: <img src="https://flagcdn.com/w40/us.png" alt="USA" className="w-6 h-4" /> },
-        { code: 'FR', name: 'France', flag: <img src="https://flagcdn.com/w40/fr.png" alt="France" className="w-6 h-4" /> },
-        { code: 'DE', name: 'Germany', flag: <img src="https://flagcdn.com/w40/de.png" alt="Germany" className="w-6 h-4" /> },
-    ];
+    // 🔹 تخزين الدول التي يتم جلبها من API
+    const [countries, setCountries] = useState([]);
+    const [countryCodes, setCountryCodes] = useState({});
 
-    const handleCountryChange = (event) => {
-        setSelectedCountry(event.target.value);
-    };
+    // 🔹 تخزين الدول المختارة
+    const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
+    const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
+    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
 
-    const handlePhoneCountryChange = (event) => {
-        setSelectedPhoneCountry(event.target.value);
-    };
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const data = await response.json();
+                const countryList = data.map(country => ({
+                    code: country.cca2,
+                    name: country.name.common,
+                    flag: <img src={country.flags.svg} alt={country.name.common} className="w-6 h-4" />,
+                    callingCode: country.idd?.root ? `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}` : 'N/A'
+                })).sort((a, b) => a.name.localeCompare(b.name));
 
+                const countryCodeMap = {};
+                countryList.forEach(country => {
+                    countryCodeMap[country.code] = country.callingCode || 'N/A';
+                });
 
-    const [selectedFirstCountry, setSelectedFirstCountry] = useState('UK');
-    const [selectedSecondCountry, setSelectedSecondCountry] = useState('UK');
-    const [selectedThirdCountry, setSelectedThirdCountry] = useState('UK');
+                setCountries(countryList);
+                setCountryCodes(countryCodeMap);
+            } catch (error) {
+                console.error('Error fetching countries:', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
 
 
 
@@ -179,12 +178,12 @@ function Business3() {
                                                 <label className="block mb-2 text-sm">Citizenship*</label>
                                                 <div className="seven0 flex iconGap items-center borderInput rounded p-2">
                                                     <i>
-                                                        {countries.find((country) => country.code === selectedFirstCountry)?.flag}
+                                                        {countries.find((country) => country.code === selectedSecondCountry)?.flag}
                                                     </i>
                                                     <span>|</span>
                                                     <select
-                                                        value={selectedFirstCountry}
-                                                        onChange={(e) => setSelectedFirstCountry(e.target.value)}
+                                                        value={selectedSecondCountry}
+                                                        onChange={(e) => setSelectedSecondCountry(e.target.value)}
                                                         className="flex-1 outline-none text-sm w-full bg-transparent"
                                                     >
                                                         {countries.map((country) => (

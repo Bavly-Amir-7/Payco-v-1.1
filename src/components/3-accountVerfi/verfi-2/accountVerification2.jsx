@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
 import Aside from '../../aside/aside';
 import { Link } from 'react-router-dom';
 import "./verfi2.css";
 import Calender from '../../calender/calender';
+import React, { useState, useEffect } from 'react';
+
 
 export default function AccountVerification2() {
     const [selectedAccount, setSelectedAccount] = useState('');
     const [activeLink, setActiveLink] = useState('overview');
     const [isPhoneVerfiVisible, setIsPhoneVerfiVisible] = useState(false);
     const [randomNumbers, setRandomNumbers] = useState([]);
+    const [phoneCode, setPhoneCode] = useState('');
+
 
     const handleNavigation = (accountType) => {
         setSelectedAccount(accountType);
@@ -27,83 +30,80 @@ export default function AccountVerification2() {
     };
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
+    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate);
-        setIsModalOpen(false); 
+        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
+        setIsModalOpen(false); // إغلاق المودال
     };
-    const [selectedCountry, setSelectedCountry] = useState('UK'); 
-    const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('UK');
+    const [selectedCountry, setSelectedCountry] = useState('GB'); // Default to UK
+    const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('GB');
 
-  const countryCodes = {
-    UK: '+44',
-    EG: '+20',
-    US: '+1',
-    FR: '+33',
-    DE: '+49',
-    CA: '+1',
-    AU: '+61',
-};
-   const countries = [
-    {
-        code: 'UK',
-        name: 'United Kingdom',
-        flag: (
-            <svg
-                className="w-6 h-4"
-                viewBox="0 0 24 18"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <rect width="24" height="18" fill="#012169" />
-                <path d="M0 0L24 18M24 0L0 18" stroke="white" strokeWidth="3" />
-                <path d="M0 0L24 18M24 0L0 18" stroke="#C8102E" strokeWidth="1.5" />
-                <path d="M10.5 0H13.5V18H10.5V0ZM0 7.5V10.5H24V7.5H0Z" fill="white" />
-                <path d="M11.25 0H12.75V18H11.25V0ZM0 8.25V9.75H24V8.25H0Z" fill="#C8102E" />
-            </svg>
-        ),
-    },
-    { code: 'AU', name: 'Australia', flag: <img src="https://flagcdn.com/w40/au.png" alt="Australia" className="w-6 h-4" /> },
-    { code: 'CA', name: 'Canada', flag: <img src="https://flagcdn.com/w40/ca.png" alt="Canada" className="w-6 h-4" /> },
-    { code: 'EG', name: 'Egypt', flag: <img src="https://flagcdn.com/w40/eg.png" alt="Egypt" className="w-6 h-4" /> },
-    { code: 'FR', name: 'France', flag: <img src="https://flagcdn.com/w40/fr.png" alt="France" className="w-6 h-4" /> },
-    { code: 'DE', name: 'Germany', flag: <img src="https://flagcdn.com/w40/de.png" alt="Germany" className="w-6 h-4" /> },
-    { code: 'US', name: 'USA', flag: <img src="https://flagcdn.com/w40/us.png" alt="USA" className="w-6 h-4" /> },
-    {
-        code: 'World',
-        name: 'Other',
-        flag: (
-            <span
-                style={{
-                    display: 'inline-flex', // Ensures proper alignment
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '24px', // Size of the emoji
-                    width: '20px', // Width of the circle
-                    height: '20px', // Height of the circle (same as width)
-                    borderRadius: '50%', // Makes the container a circle
-                    backgroundColor: 'transparent', // Optional background
-                    overflow: 'hidden',
-                    marginTop: '5px',
-                }}
-            >
-                🌎
-            </span>
-        ),
-    },
-];
-    const handleCountryChange = (event) => {
-        setSelectedCountry(event.target.value);
+    const [countryCodes, setCountryCodes] = useState({});
+
+    const [countries, setCountries] = useState([]);
+
+    const handleFirstCountryChange = (event) => {
+        setSelectedFirstCountry(event.target.value);
     };
+
+    const handleSecondCountryChange = (event) => {
+        if (event.target.value !== selectedFirstCountry) {
+            setSelectedSecondCountry(event.target.value);
+        }
+    };
+    const handleThirdCountryChange = (event) => {
+        if (event.target.value !== selectedFirstCountry) {
+            setSelectedThirdCountry(event.target.value);
+        }
+    };
+
+
 
     const handlePhoneCountryChange = (event) => {
         setSelectedPhoneCountry(event.target.value);
     };
 
+    const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
+    const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
+    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
 
-    const [selectedFirstCountry, setSelectedFirstCountry] = useState('UK');
-    const [selectedSecondCountry, setSelectedSecondCountry] = useState('UK');
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const data = await response.json();
+                const countryList = data.map(country => ({
+                    code: country.cca2,
+                    name: country.name.common,
+                    flag: <img src={country.flags.svg} alt={country.name.common} className="w-6 h-4" />,
+                    callingCode: country.idd?.root ? `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}` : 'N/A'
+                })).sort((a, b) => a.name.localeCompare(b.name));
+
+                const countryCodeMap = {};
+                countryList.forEach(country => {
+                    countryCodeMap[country.code] = country.callingCode || 'N/A';
+                });
+
+                setCountries(countryList);
+                setCountryCodes(countryCodeMap);
+            } catch (error) {
+                console.error('Error fetching countries:', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
+
+
+    useEffect(() => {
+        if (selectedPhoneCountry && countryCodes[selectedPhoneCountry]) {
+            setPhoneCode(countryCodes[selectedPhoneCountry]); // ❌ خطأ: setPhoneCode غير معرّفة
+        }
+    }, [selectedPhoneCountry, countryCodes]);
+
 
 
     return (
@@ -269,53 +269,46 @@ export default function AccountVerification2() {
 
 
                                     <div className="w-full grid gap-1 mb-4">
-    <label className="block mb-2 text-sm">Phone Number*</label>
-    <div className="d-flex">
-        {/* Country Selector with Flag */}
-        <div className="flex iconGap items-center borderInput rounded p-2">
-            <i>
-                {countries.find((country) => country.code === selectedPhoneCountry).flag}
-            </i>
-            <span>|</span>
-            <select
-                value={selectedPhoneCountry}
-                onChange={handlePhoneCountryChange}
-                className="flex-1 outline-none text-sm w-full bg-transparent"
-            >
-                {countries.map((country) => (
-                    <option
-                        key={country.code}
-                        value={country.code}
-                        className="flex items-center"
-                    >
-                        {country.name}
-                    </option>
-                ))}
-            </select>
-        </div>
+                                        <label className="block mb-2 text-sm">Phone Number*</label>
+                                        <div className="phone-input-container w-100 ">
+                                            {/* Country Selector */}
+                                            <div className="phone-input-item flex items-center borderInput rounded p-2">
+                                                <i>{countries.length > 0 ? countries.find(country => country.code === selectedCountry)?.flag : ''}</i>
+                                                <span>|</span>
+                                                <select
+                                                    value={selectedPhoneCountry}
+                                                    onChange={(e) => setSelectedPhoneCountry(e.target.value)}
+                                                    className="flex-1 outline-none text-sm w-full bg-transparent"
+                                                >
+                                                    {countries.map(country => (
+                                                        <option key={country.code} value={country.code}>
+                                                            {country.name} ({country.callingCode})
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
 
-        {/* Phone Number Input with Fixed Country Code */}
-        <div className="flex items-center borderInput rounded p-2 ml-2 w-full">
-            <span className="text-sm text-gray-700 pr-2">
-                {countryCodes[selectedPhoneCountry]}
-            </span>
-            <input
-                type="number"
-                className="flex-1 outline-none text-sm w-full"
-                placeholder="Enter your phone number"
-                style={{ borderLeft: '1px solid #ddd', paddingLeft: '8px' }}
-            />
-        </div>
+                                            {/* Phone Number Input */}
+                                            <div className="phone-input-item flex items-center borderInput rounded p-2">
+                                                <span className="text-sm text-gray-700 pr-2">
+                                                    {countryCodes[selectedPhoneCountry]}
+                                                </span>
+                                                <input
+                                                    type="number"
+                                                    className="flex-1 outline-none text-sm w-full"
+                                                    placeholder="Enter your phone number"
+                                                    style={{ borderLeft: '1px solid #ddd', paddingLeft: '8px' }}
+                                                />
+                                            </div>
 
-        {/* Verify Button */}
-        <button className="verfBtn bg-gray-200 text-gray-700 px-4 py-2 rounded ml-6">
-            Verify
-        </button>
-    </div>
-    <p className="text-center text-sm">
-        Tap “Verify” to receive a code. Enter it below to confirm your phone number.
-    </p>
-</div>
+                                            {/* Verify Button */}
+                                            <button className="verify-btn">Verify</button>
+                                        </div>
+                                        <p className="text-center text-sm">
+                                            Tap “Verify” to receive a code. Enter it below to confirm your phone number.
+                                        </p>
+                                    </div>
+
 
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -345,30 +338,29 @@ export default function AccountVerification2() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                        {/* Country Selector */}
                                         <div>
                                             <label className="block mb-2 text-sm">Country*</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
                                                 <i>
-                                                    {countries.find((country) => country.code === selectedCountry).flag}
+                                                    {countries.find((country) => country.code === selectedFirstCountry)?.flag}
                                                 </i>
                                                 <span>|</span>
                                                 <select
-                                                    value={selectedCountry}
-                                                    onChange={handleCountryChange}
+                                                    value={selectedFirstCountry}
+                                                    onChange={handleFirstCountryChange} // استخدم الدالة الجديدة
                                                     className="flex-1 outline-none text-sm w-full bg-transparent"
                                                 >
                                                     {countries.map((country) => (
-                                                        <option
-                                                            key={country.code}
-                                                            value={country.code}
-                                                            className="flex items-center"
-                                                        >
+                                                        <option key={country.code} value={country.code}>
                                                             {country.name}
                                                         </option>
                                                     ))}
                                                 </select>
                                             </div>
                                         </div>
+
+
                                         <div className="w-full">
                                             <label className="block mb-2 text-sm">City/Town*</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
@@ -394,25 +386,21 @@ export default function AccountVerification2() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                        {/* Nationality */}
+                                        {/* Nationality Selector */}
                                         <div>
                                             <label className="block mb-2 text-sm">Nationality*</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
                                                 <i>
-                                                    {countries.find((country) => country.code === selectedFirstCountry)?.flag}
+                                                    {countries.find((country) => country.code === selectedSecondCountry)?.flag}
                                                 </i>
                                                 <span>|</span>
                                                 <select
-                                                    value={selectedFirstCountry}
-                                                    onChange={(e) => setSelectedFirstCountry(e.target.value)}
+                                                    value={selectedSecondCountry}
+                                                    onChange={handleSecondCountryChange} // استخدم الدالة الجديدة
                                                     className="flex-1 outline-none text-sm w-full bg-transparent"
                                                 >
                                                     {countries.map((country) => (
-                                                        <option
-                                                            key={country.code}
-                                                            value={country.code}
-                                                            className="flex items-center"
-                                                        >
+                                                        <option key={country.code} value={country.code}>
                                                             {country.name}
                                                         </option>
                                                     ))}
@@ -426,20 +414,16 @@ export default function AccountVerification2() {
                                             <label className="block mb-2 text-sm">Second Nationality if available*</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
                                                 <i>
-                                                    {countries.find((country) => country.code === selectedSecondCountry)?.flag}
+                                                    {countries.find((country) => country.code === selectedThirdCountry)?.flag}
                                                 </i>
                                                 <span>|</span>
                                                 <select
-                                                    value={selectedSecondCountry}
-                                                    onChange={(e) => setSelectedSecondCountry(e.target.value)}
+                                                    value={selectedThirdCountry}
+                                                    onChange={handleThirdCountryChange} // استخدم الدالة الجديدة
                                                     className="flex-1 outline-none text-sm w-full bg-transparent"
                                                 >
                                                     {countries.map((country) => (
-                                                        <option
-                                                            key={country.code}
-                                                            value={country.code}
-                                                            className="flex items-center"
-                                                        >
+                                                        <option key={country.code} value={country.code}>
                                                             {country.name}
                                                         </option>
                                                     ))}

@@ -55,6 +55,7 @@ import Calender from './components/calender/calender';
 import ForgetPasswordPage from './components/forgetPassword/forgetPassword';
 import ResetPasswordPage from './components/resetPassword/resetPassword';
 import SearchBar from './components/searchBar/searchBar';
+import AccountVerification222 from './components/test';
 function App() {
   return (
     <>
@@ -63,6 +64,7 @@ function App() {
           <Route path="signup" element={<SignUpPage/>} />
           <Route path="verfi1" element={<AccountVerification1/>} />
           <Route path="verfi2" element={<AccountVerification2/>} />
+          <Route path="verfi222" element={<AccountVerification222/>} />
           <Route path="verfi3" element={<AccountVerification3/>} />
           <Route path="verfi4" element={<AccountVerification4/>} />
           <Route path="business1" element={<Business1/>} />

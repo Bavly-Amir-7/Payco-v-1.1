@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./business1.css";
 
 import { Link } from 'react-router-dom';
@@ -22,100 +22,45 @@ export default function Business1() {
 
 
 
+    // 🔹 تخزين الدول التي يتم جلبها من API
+    const [countries, setCountries] = useState([]);
+    const [countryCodes, setCountryCodes] = useState({});
 
-    const countries = [
-        {
-            code: 'UK',
-            name: 'United Kingdom',
-            flag: (
-                <svg
-                    className="w-6 h-4"
-                    viewBox="0 0 24 18"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <rect width="24" height="18" fill="#012169" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="white" strokeWidth="3" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="#C8102E" strokeWidth="1.5" />
-                    <path d="M10.5 0H13.5V18H10.5V0ZM0 7.5V10.5H24V7.5H0Z" fill="white" />
-                    <path d="M11.25 0H12.75V18H11.25V0ZM0 8.25V9.75H24V8.25H0Z" fill="#C8102E" />
-                </svg>
-            ),
-        },
-        { code: 'EG', name: 'Egypt', flag: <img src="https://flagcdn.com/w40/eg.png" alt="Egypt" className="w-6 h-4" /> },
-        { code: 'US', name: 'USA', flag: <img src="https://flagcdn.com/w40/us.png" alt="USA" className="w-6 h-4" /> },
-        { code: 'FR', name: 'France', flag: <img src="https://flagcdn.com/w40/fr.png" alt="France" className="w-6 h-4" /> },
-        { code: 'DE', name: 'Germany', flag: <img src="https://flagcdn.com/w40/de.png" alt="Germany" className="w-6 h-4" /> },
-        { code: 'CA', name: 'Canada', flag: <img src="https://flagcdn.com/w40/ca.png" alt="Canada" className="w-6 h-4" /> },
-        { code: 'AU', name: 'Australia', flag: <img src="https://flagcdn.com/w40/au.png" alt="Australia" className="w-6 h-4" /> },
-        {
-            code: 'World',
-            name: 'Other',
-            flag: (
-                <span
-                    style={{
-                        display: 'inline-flex', // Ensures proper alignment
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontSize: '24px', // Size of the emoji
-                        width: '20px', // Width of the circle
-                        height: '20px', // Height of the circle (same as width)
-                        borderRadius: '50%', // Makes the container a circle
-                        backgroundColor: 'transparent', // Optional background
-                        overflow: 'hidden',
-                        marginTop: '5px',
-                    }}
-                >
-                    🌎
-                </span>
-            ),
-        },
-    ]; const handleCountryChange = (event) => {
-        setSelectedCountry(event.target.value);
-    };
+    // 🔹 تخزين الدول المختارة
+    const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
+    const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
+    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
 
-    const handlePhoneCountryChange = (event) => {
-        setSelectedPhoneCountry(event.target.value);
-    };
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const data = await response.json();
+                const countryList = data.map(country => ({
+                    code: country.cca2,
+                    name: country.name.common,
+                    flag: <img src={country.flags.svg} alt={country.name.common} className="w-6 h-4" />,
+                    callingCode: country.idd?.root ? `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}` : 'N/A'
+                })).sort((a, b) => a.name.localeCompare(b.name));
+
+                const countryCodeMap = {};
+                countryList.forEach(country => {
+                    countryCodeMap[country.code] = country.callingCode || 'N/A';
+                });
+
+                setCountries(countryList);
+                setCountryCodes(countryCodeMap);
+            } catch (error) {
+                console.error('Error fetching countries:', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
 
 
-    const [selectedFirstCountry, setSelectedFirstCountry] = useState('UK');
-    const [selectedSecondCountry, setSelectedSecondCountry] = useState('UK');
-    const [selectedThirdCountry, setSelectedThirdCountry] = useState('UK');
-    const [selectedExpectedCountries, setSelectedExpectedCountries] = useState([]);
-
-    const handleAddExpectedCountry = (country) => {
-        setSelectedExpectedCountries((prev) => [...prev, country]);
-    };
-
-    const [countries2, setCountries] = useState([
-        {
-            code: 'UK',
-            name: 'United Kingdom',
-            flag: (
-                <svg
-                    className="w-6 h-4"
-                    viewBox="0 0 24 18"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <rect width="24" height="18" fill="#012169" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="white" strokeWidth="3" />
-                    <path d="M0 0L24 18M24 0L0 18" stroke="#C8102E" strokeWidth="1.5" />
-                    <path d="M10.5 0H13.5V18H10.5V0ZM0 7.5V10.5H24V7.5H0Z" fill="white" />
-                    <path d="M11.25 0H12.75V18H11.25V0ZM0 8.25V9.75H24V8.25H0Z" fill="#C8102E" />
-                </svg>
-            ),
-        },
-        { code: 'EG', name: 'Egypt', flag: <img src="https://flagcdn.com/w40/eg.png" alt="Egypt" className="w-6 h-4" /> },
-        { code: 'US', name: 'USA', flag: <img src="https://flagcdn.com/w40/us.png" alt="USA" className="w-6 h-4" /> },
-        { code: 'FR', name: 'France', flag: <img src="https://flagcdn.com/w40/fr.png" alt="France" className="w-6 h-4" /> },
-        { code: 'DE', name: 'Germany', flag: <img src="https://flagcdn.com/w40/de.png" alt="Germany" className="w-6 h-4" /> },
-    ]);
-
-    // دالة حذف الدولة بناءً على كودها
     const handleDeleteCountry = (code) => {
-        setCountries((prevCountries) =>
-            prevCountries.filter((country) => country.code !== code)
-        );
+        setCountries(countries.filter(country => country.code !== code));
     };
 
     return (
@@ -286,12 +231,10 @@ export default function Business1() {
                                         </div>
                                     </div>
                                     <div className=" flex-col md:flex-row mb-4">
-                                        <div className="pr-2 mb-4 md:mb-0">
-                                            <label className="block mb-2">Country</label>
-                                            <div className="seven0 flex iconGap items-center borderInput rounded p-2" style={{ width: "50%" }}>
-                                                <i>
-                                                    {countries.find((country) => country.code === selectedFirstCountry)?.flag}
-                                                </i>
+                                        <div>
+                                            <label className="block mb-2">Country*</label>
+                                            <div className="flex iconGap items-center borderInput rounded p-2">
+                                                <i>{countries.find((country) => country.code === selectedFirstCountry)?.flag}</i>
                                                 <span>|</span>
                                                 <select
                                                     value={selectedFirstCountry}
@@ -299,10 +242,7 @@ export default function Business1() {
                                                     className="flex-1 outline-none text-sm w-full bg-transparent"
                                                 >
                                                     {countries.map((country) => (
-                                                        <option
-                                                            key={country.code}
-                                                            value={country.code}
-                                                        >
+                                                        <option key={country.code} value={country.code}>
                                                             {country.name}
                                                         </option>
                                                     ))}
@@ -337,21 +277,16 @@ export default function Business1() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                             <div>
                                                 <label className="block mb-2">Address Line One*</label>
-                                                <div className="flex iconGap items-center borderInput rounded p-2" style={{ width: "100%" }}>
-                                                    <i>
-                                                        {countries.find((country) => country.code === selectedThirdCountry)?.flag}
-                                                    </i>
+                                                <div className="flex iconGap items-center borderInput rounded p-2">
+                                                    <i>{countries.find((country) => country.code === selectedSecondCountry)?.flag}</i>
                                                     <span>|</span>
                                                     <select
-                                                        value={selectedThirdCountry}
-                                                        onChange={(e) => setSelectedThirdCountry(e.target.value)}
+                                                        value={selectedSecondCountry}
+                                                        onChange={(e) => setSelectedSecondCountry(e.target.value)}
                                                         className="flex-1 outline-none text-sm w-full bg-transparent"
                                                     >
                                                         {countries.map((country) => (
-                                                            <option
-                                                                key={country.code}
-                                                                value={country.code}
-                                                            >
+                                                            <option key={country.code} value={country.code}>
                                                                 {country.name}
                                                             </option>
                                                         ))}
@@ -361,21 +296,16 @@ export default function Business1() {
 
                                             <div className="md:ml-32">
                                                 <label className="block mb-2">Currency</label>
-                                                <div className="iconGap flex items-center borderInput rounded p-2" style={{ width: "100%" }}>
-                                                    <i>
-                                                        {countries.find((country) => country.code === selectedSecondCountry)?.flag}
-                                                    </i>
+                                                <div className="flex iconGap items-center borderInput rounded p-2">
+                                                    <i>{countries.find((country) => country.code === selectedThirdCountry)?.flag}</i>
                                                     <span>|</span>
                                                     <select
-                                                        value={selectedSecondCountry}
-                                                        onChange={(e) => setSelectedSecondCountry(e.target.value)}
+                                                        value={selectedThirdCountry}
+                                                        onChange={(e) => setSelectedThirdCountry(e.target.value)}
                                                         className="flex-1 outline-none text-sm w-full bg-transparent"
                                                     >
                                                         {countries.map((country) => (
-                                                            <option
-                                                                key={country.code}
-                                                                value={country.code}
-                                                            >
+                                                            <option key={country.code} value={country.code}>
                                                                 {country.name}
                                                             </option>
                                                         ))}
@@ -396,52 +326,54 @@ export default function Business1() {
                                             Which countries do you expect to work with the most?
                                         </label>
                                         <div className="selectedCountries flex flex-wrap gap-2">
-                                            {countries2.map((country) => (
-                                                <div
-                                                    key={country.code}
-                                                    className="flex items-center gap-2 bg-gray-200 px-2 py-1 rounded shadow-sm"
-                                                >
-                                                    <span>{country.flag}</span>
-                                                    <span className="text-sm font-medium">{country.name}</span>
-                                                    <button
-                                                        onClick={() => handleDeleteCountry(country.code)} // ربط الزر مع الدالة
-                                                        className="text-black hover:text-red-600"
-                                                        aria-label="Remove country"
+                                            {countries
+                                                .filter((country) =>
+                                                    ["GB", "EG", "FR", "US", "DE"].includes(country.code)
+                                                )
+                                                .map((country) => (
+                                                    <div
+                                                        key={country.code}
+                                                        className="flex items-center gap-2 bg-gray-200 px-2 py-1 rounded shadow-sm"
                                                     >
-                                                        <i
-                                                            className="cursor-pointer w-100 flex justify-end"
+                                                        <span>{country.flag}</span>
+                                                        <span className="text-sm font-medium">{country.name}</span>
+                                                        <button
                                                             onClick={() => handleDeleteCountry(country.code)}
+                                                            className="text-black hover:text-red-600"
+                                                            aria-label="Remove country"
                                                         >
-                                                            <svg
-                                                                width="18"
-                                                                height="19"
-                                                                viewBox="0 0 18 19"
-                                                                fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                            >
-                                                                <line
-                                                                    x1="1.17976"
-                                                                    y1="0.749436"
-                                                                    x2="17.1798"
-                                                                    y2="16.7494"
-                                                                    stroke="black"
-                                                                    strokeWidth="1.5"
-                                                                />
-                                                                <line
-                                                                    x1="17.1798"
-                                                                    y1="2.16365"
-                                                                    x2="1.17976"
-                                                                    y2="18.1636"
-                                                                    stroke="black"
-                                                                    strokeWidth="1.5"
-                                                                />
-                                                            </svg>
-                                                        </i>
-                                                    </button>
-                                                </div>
-                                            ))}
+                                                            <i className="cursor-pointer w-100 flex justify-end">
+                                                                <svg
+                                                                    width="18"
+                                                                    height="19"
+                                                                    viewBox="0 0 18 19"
+                                                                    fill="none"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <line
+                                                                        x1="1.17976"
+                                                                        y1="0.749436"
+                                                                        x2="17.1798"
+                                                                        y2="16.7494"
+                                                                        stroke="black"
+                                                                        strokeWidth="1.5"
+                                                                    />
+                                                                    <line
+                                                                        x1="17.1798"
+                                                                        y1="2.16365"
+                                                                        x2="1.17976"
+                                                                        y2="18.1636"
+                                                                        stroke="black"
+                                                                        strokeWidth="1.5"
+                                                                    />
+                                                                </svg>
+                                                            </i>
+                                                        </button>
+                                                    </div>
+                                                ))}
                                         </div>
                                     </div>
+
 
 
 

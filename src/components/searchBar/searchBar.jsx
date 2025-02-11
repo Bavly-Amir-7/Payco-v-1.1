@@ -1,6 +1,7 @@
 import React from 'react'
 import "./searchBar.css"
 
+
 export default function SearchBar() {
     return (
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 w-full px-3 overflow-hidden">

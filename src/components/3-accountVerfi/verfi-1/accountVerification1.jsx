@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./verfi1.css";
 import Aside from '../../aside/aside';
 import { Link } from 'react-router-dom';
@@ -13,54 +13,42 @@ export default function AccountVerification1() {
     };
 
 
-    
-   const countries = [
-    {
-        code: 'UK',
-        name: 'United Kingdom',
-        flag: (
-            <svg
-                className="w-6 h-4"
-                viewBox="0 0 24 18"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <rect width="24" height="18" fill="#012169" />
-                <path d="M0 0L24 18M24 0L0 18" stroke="white" strokeWidth="3" />
-                <path d="M0 0L24 18M24 0L0 18" stroke="#C8102E" strokeWidth="1.5" />
-                <path d="M10.5 0H13.5V18H10.5V0ZM0 7.5V10.5H24V7.5H0Z" fill="white" />
-                <path d="M11.25 0H12.75V18H11.25V0ZM0 8.25V9.75H24V8.25H0Z" fill="#C8102E" />
-            </svg>
-        ),
-    },
-    { code: 'EG', name: 'Egypt', flag: <img src="https://flagcdn.com/w40/eg.png" alt="Egypt" className="w-6 h-4" /> },
-    { code: 'US', name: 'USA', flag: <img src="https://flagcdn.com/w40/us.png" alt="USA" className="w-6 h-4" /> },
-    { code: 'FR', name: 'France', flag: <img src="https://flagcdn.com/w40/fr.png" alt="France" className="w-6 h-4" /> },
-    { code: 'DE', name: 'Germany', flag: <img src="https://flagcdn.com/w40/de.png" alt="Germany" className="w-6 h-4" /> },
-    { code: 'CA', name: 'Canada', flag: <img src="https://flagcdn.com/w40/ca.png" alt="Canada" className="w-6 h-4" /> },
-    { code: 'AU', name: 'Australia', flag: <img src="https://flagcdn.com/w40/au.png" alt="Australia" className="w-6 h-4" /> },
-    {
-        code: 'World',
-        name: 'Other',
-        flag: (
-            <span
-                style={{
-                    display: 'inline-flex', // Ensures proper alignment
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '24px', // Size of the emoji
-                    width: '20px', // Width of the circle
-                    height: '20px', // Height of the circle (same as width)
-                    borderRadius: '50%', // Makes the container a circle
-                    backgroundColor: 'transparent', // Optional background
-                    overflow: 'hidden',
-                    marginTop: '5px',
-                }}
-            >
-                🌎
-            </span>
-        ),
-    },
-];
+    // 🔹 تخزين الدول التي يتم جلبها من API
+      const [countries, setCountries] = useState([]);
+      const [countryCodes, setCountryCodes] = useState({});
+  
+      // 🔹 تخزين الدول المختارة
+      const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
+      const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
+      const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
+  
+      useEffect(() => {
+          const fetchCountries = async () => {
+              try {
+                  const response = await fetch('https://restcountries.com/v3.1/all');
+                  const data = await response.json();
+                  const countryList = data.map(country => ({
+                      code: country.cca2,
+                      name: country.name.common,
+                      flag: <img src={country.flags.svg} alt={country.name.common} className="w-6 h-4" />,
+                      callingCode: country.idd?.root ? `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}` : 'N/A'
+                  })).sort((a, b) => a.name.localeCompare(b.name));
+  
+                  const countryCodeMap = {};
+                  countryList.forEach(country => {
+                      countryCodeMap[country.code] = country.callingCode || 'N/A';
+                  });
+  
+                  setCountries(countryList);
+                  setCountryCodes(countryCodeMap);
+              } catch (error) {
+                  console.error('Error fetching countries:', error);
+              }
+          };
+  
+          fetchCountries();
+      }, []);
+  
     
         const handleCountryChange = (event) => {
             setSelectedCountry(event.target.value);
@@ -71,7 +59,6 @@ export default function AccountVerification1() {
         };
     
     
-        const [selectedFirstCountry, setSelectedFirstCountry] = useState('UK');
 
     return (
         <>
@@ -151,8 +138,8 @@ export default function AccountVerification1() {
                                                 <label className="block text-gray-700">Phone Number*</label>
                                                 <div className="mt-1 relative rounded-md shadow-sm">
                                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path d="M14.25 0.75H3.75C2.7558 0.751191 1.80267 1.14666 1.09966 1.84966C0.396661 2.55267 0.00119089 3.5058 0 4.5L0 13.5C0.00119089 14.4942 0.396661 15.4473 1.09966 16.1503C1.80267 16.8533 2.7558 17.2488 3.75 17.25H14.25C15.2442 17.2488 16.1973 16.8533 16.9003 16.1503C17.6033 15.4473 17.9988 14.4942 18 13.5V4.5C17.9988 3.5058 17.6033 2.55267 16.9003 1.84966C16.1973 1.14666 15.2442 0.751191 14.25 0.75ZM3.75 2.25H14.25C14.6991 2.25088 15.1376 2.38614 15.5092 2.63835C15.8808 2.89057 16.1684 3.24821 16.335 3.66525L10.5915 9.4095C10.1688 9.83049 9.59656 10.0669 9 10.0669C8.40344 10.0669 7.83118 9.83049 7.4085 9.4095L1.665 3.66525C1.83161 3.24821 2.11921 2.89057 2.49079 2.63835C2.86236 2.38614 3.30091 2.25088 3.75 2.25ZM14.25 15.75H3.75C3.15326 15.75 2.58097 15.5129 2.15901 15.091C1.73705 14.669 1.5 14.0967 1.5 13.5V5.625L6.348 10.47C7.05197 11.1722 8.00569 11.5665 9 11.5665C9.99431 11.5665 10.948 11.1722 11.652 10.47L16.5 5.625V13.5C16.5 14.0967 16.2629 14.669 15.841 15.091C15.419 15.5129 14.8467 15.75 14.25 15.75Z" fill="#2D2D2D" />
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M17.1819 4.50022H14.6962L15.5168 1.13335C15.6338 0.653641 15.3753 0.159594 14.9384 0.0308912C14.5015 -0.0978115 14.0523 0.187444 13.9361 0.667154L13.0027 4.50022H7.19182L8.0125 1.13335C8.12951 0.653641 7.87093 0.159594 7.43407 0.0308912C6.99706 -0.0968227 6.54882 0.187444 6.43256 0.667154L5.49817 4.50022H2.45455C2.00286 4.50022 1.63642 4.90248 1.63642 5.40015C1.63642 5.89799 2.00286 6.30025 2.45455 6.30025H5.05877L3.74235 11.7002H0.818134C0.366595 11.7002 0 12.1024 0 12.6001C0 13.0978 0.366595 13.5 0.818134 13.5H3.30385L2.48317 16.8669C2.36616 17.3466 2.62474 17.8406 3.0616 17.9693C3.13201 17.9901 3.20317 18 3.27269 18C3.63359 18 3.96498 17.7353 4.06236 17.3331L4.99749 13.5H10.8082L9.9875 16.8669C9.87064 17.3466 10.1291 17.8406 10.5661 17.9693C10.6363 17.9901 10.7075 18 10.7779 18C11.1388 18 11.4701 17.7353 11.5674 17.3331L12.5018 13.5H15.5454C15.9971 13.5 16.3637 13.0978 16.3637 12.6001C16.3637 12.1024 15.9971 11.7002 15.5454 11.7002H12.9412L14.2576 6.30025H17.1819C17.6336 6.30025 18 5.89799 18 5.40015C18 4.90248 17.6336 4.50022 17.1819 4.50022ZM11.2467 11.7002H5.436L6.75242 6.30025H12.5633L11.2467 11.7002Z" fill="black" />
                                                         </svg>
                                                         <span className="pl-1">|</span>
                                                     </div>
