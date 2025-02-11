@@ -4,6 +4,8 @@ import Aside from '../../aside/aside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlus, faChevronDown, faChevronUp, faCalendarAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import "./contacts1.css";
+import SearchBar from '../../searchBar/searchBar';
+
 
 export default function Contacts1() {
     // Function to copy text to clipboard
@@ -24,23 +26,10 @@ export default function Contacts1() {
                     </div>
 
                     <div className="col-12 col-lg-9 col-md-12 mt-5 text-center">
-                        <div className="flex flex-col md:flex-row justify-between items-center mb-6 w-100">
-                            <div className="parent w-100 flex gap-4">
-                                <div className="relative w-full md:mb-0" style={{ width: "80%" }}>
-                                    <input type="text" placeholder="Search anything here" className="w-full p-3 rounded-lg border border-gray-300" />
-                                </div>
-                                <div className="flex items-center space-x-4">
-                                    <i className="fas fa-bell text-gray-400"></i>
-                                    <div className="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/a1aa/image/ScBMkEoJ3Gr6HVjcF2CrdyIti56QzXDWjyir38s7YUdcXC8E.jpg" alt="User profile picture" className="w-10 h-10 rounded-full" width="40" height="40" />
-                                        <div className="flex flex-col items-start">
-                                            <span className="text-gray-700">John Smith</span>
-                                        </div>
-                                        <i className="fas fa-caret-down text-gray-400"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
+                    <SearchBar />
+
+
                         <div className="text-gray-500 mb-6 text-sm" style={{ placeSelf: "start" }}>
                             <span>Dashboard</span>
                             <i className="fas fa-chevron-right mx-2"></i>

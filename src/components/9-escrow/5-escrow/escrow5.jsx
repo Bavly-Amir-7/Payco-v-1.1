@@ -5,25 +5,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlus, faChevronDown, faChevronUp, faCalendarAlt, faTimes } from '@fortawesome/free-solid-svg-icons';
 import "./escrow5.css";
 import inovices from "./Frame.svg"
+import SearchBar from '../../searchBar/searchBar';
+
 
 export default function Escrow5() {
 
 
     const [account, setAccount] = useState("USDT - wallet");
 
-    // تعديل: تعريف حالة للتحكم في ظهور وإخفاء القائمة
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // تعديل: تعريف حالة لتتبع العنصر النشط
     const [activeLink, setActiveLink] = useState('overview');
 
-    // تعديل: دالة لفتح وإغلاق القائمة
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen); // هذه السطر يقوم بتغيير الحالة بين true و false
+        setIsSidebarOpen(!isSidebarOpen);
     };
-    // تعديل: دالة لتحديد العنصر النشط وإغلاق القائمة
+
     const handleLinkClick = (link) => {
-        setActiveLink(link); // تحديث العنصر النشط
-        setIsSidebarOpen(false); // إغلاق القائمة
+        setActiveLink(link);
+        setIsSidebarOpen(false); 
     };
 
 
@@ -32,12 +31,11 @@ export default function Escrow5() {
             <div className="container-fluid lettersContainer flex-center">
                 <div className="row">
                     <div className="col-lg-3 col-md-2 asideComponent " style={{ height: "100%" }}>
-                        {/* تعديل: تمرير props للـ Aside للتحكم في حالته */}
                         <Aside
-                            isSidebarOpen={isSidebarOpen}  // حالة فتح أو إغلاق الـ Sidebar
-                            toggleSidebar={toggleSidebar}  // دالة لفتح أو إغلاق الـ Sidebar
-                            activeLink={activeLink}        // العنصر النشط في القائمة
-                            handleLinkClick={handleLinkClick}  // دالة لتغيير العنصر النشط
+                            isSidebarOpen={isSidebarOpen}  
+                            toggleSidebar={toggleSidebar}  
+                            activeLink={activeLink}       
+                            handleLinkClick={handleLinkClick}  
                         />
                     </div>
 
@@ -51,27 +49,13 @@ export default function Escrow5() {
 
 
 
-                    <div className="col-12 col-lg-9 col-md-12  text-center">
+                    <div className="col-12 col-lg-9 col-md-12 mt-5 text-center">
 
 
 
-                        <div className="flex flex-col md:flex-row justify-between items-center mb-6 w-100 mt-10">
-                            <div className="parent w-100 flex gap-4">
-                                <div className="relative w-full md:mb-0" style={{ width: "80%" }}>
-                                    <input type="text" placeholder="Search anything here" className="w-full p-3 rounded-lg border border-gray-300" />
-                                </div>
-                                <div className="flex items-center space-x-4">
-                                    <i className="fas fa-bell text-gray-400"></i>
-                                    <div className="flex items-center space-x-2">
-                                        <img src="https://storage.googleapis.com/a1aa/image/ScBMkEoJ3Gr6HVjcF2CrdyIti56QzXDWjyir38s7YUdcXC8E.jpg" alt="User profile picture" className="w-10 h-10 rounded-full" width="40" height="40" />
-                                        <div className="flex flex-col items-start">
-                                            <span className="text-gray-700">John Smith</span>
-                                        </div>
-                                        <i className="fas fa-caret-down text-gray-400"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <SearchBar />
+
+
                         <div className="text-gray-500 mb-6 text-sm" style={{ placeSelf: "start" }}>
                             <span>Dashboard</span>
                             <i className="fas fa-chevron-right mx-2"></i>

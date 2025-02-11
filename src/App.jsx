@@ -54,6 +54,7 @@ import Business3 from './components/4-businessVerfi/3-business3/businessPage3';
 import Calender from './components/calender/calender';
 import ForgetPasswordPage from './components/forgetPassword/forgetPassword';
 import ResetPasswordPage from './components/resetPassword/resetPassword';
+import SearchBar from './components/searchBar/searchBar';
 function App() {
   return (
     <>
@@ -109,6 +110,7 @@ function App() {
           <Route path="calender" element={<Calender/>} />
           <Route path="/forget-password" element={<ForgetPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/search-bar" element={<SearchBar/>} />
 
 
         </Routes>

@@ -6,6 +6,7 @@ import recptImage from "./Ellipse 7.svg";
 import { Link } from 'react-router-dom';
 
 import notFound from "./No Results@3x.svg";
+import SearchBar from '../../searchBar/searchBar';
 
 
 
@@ -67,31 +68,19 @@ export default function Accounts1() {
                     </div>
 
                     <div className="col-12 col-lg-9 col-md-12 mt-5" style={{ placeItems: "center" }}>
+                            <SearchBar />
 
                         <div className="">
-                            <div className="flex flex-col md:flex-row justify-between items-center mb-6 w-100">
-                                <div className="parent w-100 flex gap-3">
-                                    <div className="relative w-full md:mb-0" style={{ width: "80%" }}>
-                                        <input type="text" placeholder="Search anything here" className="w-full p-3 rounded-lg border border-gray-300" />
-                                    </div>
-                                    <div className="flex items-center space-x-1">
-                                        <i className="fas fa-bell text-gray-400"></i>
-                                        <div className="flex items-center space-x-2">
-                                            <img src="https://storage.googleapis.com/a1aa/image/ScBMkEoJ3Gr6HVjcF2CrdyIti56QzXDWjyir38s7YUdcXC8E.jpg" alt="User profile picture" className="w-10 h-10 rounded-full" width="40" height="40" />
-                                            <div className="flex flex-col items-start">
-                                                <span className="text-gray-700">John Smith</span>
-                                            </div>
-                                            <i className="fas fa-caret-down text-gray-400"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+
+
+
                             <div className="flex justify-between">
 
                                 <h1 className="text-2xl font-bold mb-2">Welcome back, John</h1>
                                 <Link to="/accounts2" className="">
 
-                                <button className="redBg text-white px-4 py-2 rounded-lg mt-1">send/receive</button>
+                                    <button className="redBg text-white px-4 py-2 rounded-lg mt-1">send/receive</button>
                                 </Link>
 
                             </div>

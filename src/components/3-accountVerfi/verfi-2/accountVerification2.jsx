@@ -27,15 +27,15 @@ export default function AccountVerification2() {
     };
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
-        setIsModalOpen(false); // إغلاق المودال
+        setDateOfBirth(newDate);
+        setIsModalOpen(false); 
     };
-    const [selectedCountry, setSelectedCountry] = useState('UK'); // الدولة الافتراضية لقائمة "Country"
-    const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('UK'); // الدولة الافتراضية لقائمة الهاتف
+    const [selectedCountry, setSelectedCountry] = useState('UK'); 
+    const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('UK');
 
   const countryCodes = {
     UK: '+44',
