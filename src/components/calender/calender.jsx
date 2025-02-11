@@ -66,7 +66,7 @@ export default function Calender({ onDateSelect }) {
         setSelectedDay(day);
         const formattedDate = `${currentDate.getMonth() + 1} / ${day} / ${currentDate.getFullYear()}`;
         if (onDateSelect) {
-            onDateSelect(formattedDate); // تحديث التاريخ المختار وإرساله إلى المكون الأب
+            onDateSelect(formattedDate); 
         }
     };
 

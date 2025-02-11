@@ -13,11 +13,11 @@ export default function AccountVerification1() {
     };
 
 
-    // 🔹 تخزين الدول التي يتم جلبها من API
+    // 🔹  countries API
       const [countries, setCountries] = useState([]);
       const [countryCodes, setCountryCodes] = useState({});
   
-      // 🔹 تخزين الدول المختارة
+      // 🔹 save choosen country
       const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
       const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
       const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');

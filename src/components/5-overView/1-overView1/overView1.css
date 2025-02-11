@@ -1,4 +1,4 @@
 path {
-    opacity: 1; /* تأكد من أن العنصر مرئي */
-    transition: none; /* إزالة أي تأثيرات انتقال قد تكون مفعلة */
+    opacity: 1; 
+    transition: none; 
 }

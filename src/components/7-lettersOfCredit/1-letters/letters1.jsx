@@ -12,13 +12,13 @@ export default function Letters1() {
 
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
-    const [isModalOpen2, setIsModalOpen2] = useState(false); // حالة لفتح وغلق المودال
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isModalOpen2, setIsModalOpen2] = useState(false); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998");
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
-        setIsModalOpen(false); // إغلاق المودال
+        setDateOfBirth(newDate); 
+        setIsModalOpen(false); 
     };
 
 
@@ -117,7 +117,7 @@ export default function Letters1() {
                                                             <div
                                                                 className="iconGap flex items-center borderInput rounded p-2 cursor-pointer"
                                                                 style={{ width: "100%", border: "1px solid red" }}
-                                                                onClick={() => setIsModalOpen(true)} // فتح المودال عند الضغط على الأيقونة
+                                                                onClick={() => setIsModalOpen(true)} 
                                                             >
 
                                                                 <input
@@ -134,7 +134,7 @@ export default function Letters1() {
                                                             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                                                                 <div className="bg-white rounded-lg shadow-lg p-4">
                                                                     <Calender
-                                                                        onDateSelect={handleDateChange} // تمرير الدالة لتحديث التاريخ
+                                                                        onDateSelect={handleDateChange} 
                                                                     />
                                                                     <button
                                                                         className="mt-4 bg-gray-300 text-gray-700 py-2 px-4 rounded"
@@ -211,7 +211,6 @@ export default function Letters1() {
                                 {activeTab === "existing" && (
                                     <div>
                                         <div>
-                                            {/* محتوى Create new invoice */}
                                             <div className="p-6">
                                                 <div className=" p-6">
                                                     <div className="theBorder bg-white p-6 rounded-lg ">
@@ -353,7 +352,7 @@ export default function Letters1() {
                                 )}
                                 {activeTab === "import" && (
                                     <div>
-                                        {/* محتوى Import Invoice */}
+                                        {/* Import Invoice */}
                                         <p>هنا محتوى استيراد فاتورة.</p>
                                     </div>
                                 )}

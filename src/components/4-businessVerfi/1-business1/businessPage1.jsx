@@ -8,12 +8,12 @@ import Calender from '../../calender/calender';
 
 export default function Business1() {
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
-        setIsModalOpen(false); // إغلاق المودال
+        setDateOfBirth(newDate); 
+        setIsModalOpen(false);
     };
 
 
@@ -22,11 +22,9 @@ export default function Business1() {
 
 
 
-    // 🔹 تخزين الدول التي يتم جلبها من API
     const [countries, setCountries] = useState([]);
     const [countryCodes, setCountryCodes] = useState({});
 
-    // 🔹 تخزين الدول المختارة
     const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
     const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
     const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
@@ -146,7 +144,7 @@ export default function Business1() {
                                                     <div
                                                         className="iconGap flex items-center borderInput rounded p-2 cursor-pointer"
                                                         style={{ width: "100%" }}
-                                                        onClick={() => setIsModalOpen(true)} // فتح المودال عند الضغط على الأيقونة
+                                                        onClick={() => setIsModalOpen(true)} 
                                                     >
                                                         <input
                                                             type="text"

@@ -1,14 +1,14 @@
 .viewEscortBtn .viewAndSend {
     width: 100%;
-    height: 85px; /* لضمان نفس الارتفاع */
-    border-radius: 12px; /* يجعل الحواف دائرية */
-    background: #FFFFFF; /* خلفية بيضاء */
-    color: #C20101; /* النص بالأحمر */
+    height: 85px; 
+    border-radius: 12px;
+    background: #FFFFFF; 
+    color: #C20101; 
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* الظلال */
-    transition: box-shadow 0.3s ease-in-out; /* تأثير ناعم عند التفاعل */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease-in-out; 
   }
 
 .viewEscortBtn .viewAndSend:hover{

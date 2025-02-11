@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 export default function AccountVerification3() {
     const [selectedAccount, setSelectedAccount] = useState('');
     const [activeLink, setActiveLink] = useState('');
-    const [showQRCode, setShowQRCode] = useState(false); // حالة جديدة للتحكم في ظهور QR Code
+    const [showQRCode, setShowQRCode] = useState(false);
 
     const handleNavigation = (accountType) => {
         setSelectedAccount(accountType);
-        console.log(`Selected account type: ${accountType}`); // Logging selected account type
+        console.log(`Selected account type: ${accountType}`); 
     };
 
     const handleGenerateQRCode = () => {
-        setShowQRCode(true); // تغيير الحالة لإظهار QR Code
+        setShowQRCode(true); 
     };
 
     return (
@@ -85,13 +85,13 @@ export default function AccountVerification3() {
                                     </label>
                                     <p className='scan'>Verify on mobile: Press 'Generate Code' to scan and complete the process</p>
                                     <div className='text-center'>
-                                        {!showQRCode ? ( // تحقق إذا كانت QR Code يجب أن تظهر أم لا
+                                        {!showQRCode ? ( 
                                             <button className='codeBtn2' onClick={handleGenerateQRCode}>Generate QR Code</button>
-                                        ) : null} {/* إذا كانت showQRCode true، لا تعرض الزر */}
+                                        ) : null} 
                                     </div>
 
 
-                                    {showQRCode && ( // تحقق إذا كانت QR Code يجب أن تظهر أم لا
+                                    {showQRCode && ( 
                                         <div className="text-center w-100  ">
                                             <div className="bg-white p-4 rounded-lg shadow-md qrCode">
                                                 <i className="fas fa-qrcode text-5xl"></i>

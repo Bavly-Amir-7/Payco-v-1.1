@@ -13,19 +13,15 @@ export default function Credit2() {
 
     const [account, setAccount] = useState("USDT - wallet");
 
-    // تعديل: تعريف حالة للتحكم في ظهور وإخفاء القائمة
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // تعديل: تعريف حالة لتتبع العنصر النشط
     const [activeLink, setActiveLink] = useState('overview');
 
-    // تعديل: دالة لفتح وإغلاق القائمة
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen); // هذه السطر يقوم بتغيير الحالة بين true و false
+        setIsSidebarOpen(!isSidebarOpen); 
     };
-    // تعديل: دالة لتحديد العنصر النشط وإغلاق القائمة
     const handleLinkClick = (link) => {
-        setActiveLink(link); // تحديث العنصر النشط
-        setIsSidebarOpen(false); // إغلاق القائمة
+        setActiveLink(link);
+        setIsSidebarOpen(false); 
     };
 
 
@@ -34,12 +30,11 @@ export default function Credit2() {
             <div className="container-fluid lettersContainer flex-center">
                 <div className="row">
                     <div className="col-lg-3 col-md-2 asideComponent " style={{ height: "100%" }}>
-                        {/* تعديل: تمرير props للـ Aside للتحكم في حالته */}
                         <Aside
-                            isSidebarOpen={isSidebarOpen}  // حالة فتح أو إغلاق الـ Sidebar
-                            toggleSidebar={toggleSidebar}  // دالة لفتح أو إغلاق الـ Sidebar
-                            activeLink={activeLink}        // العنصر النشط في القائمة
-                            handleLinkClick={handleLinkClick}  // دالة لتغيير العنصر النشط
+                            isSidebarOpen={isSidebarOpen}  
+                            toggleSidebar={toggleSidebar}  
+                            activeLink={activeLink}        
+                            handleLinkClick={handleLinkClick}  
                         />
                     </div>
 

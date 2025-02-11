@@ -10,11 +10,8 @@
     height: 48px;
     box-sizing: border-box;
     padding-right: 8px;
-    /* زودنا المسافة */
     overflow: hidden;
-    /* لمنع القص */
     direction: ltr;
-    /* لضمان ترتيب العناصر */
 }
 
 
@@ -64,18 +61,16 @@
 }
 .phone-input-container {
     display: flex;
-    gap: 10px; /* مسافة بين العناصر */
+    gap: 10px; 
     align-items: center;
     justify-content: space-between;
 }
 
-/* جعل الـ input ياخذ المساحة المناسبة في الشاشات الكبيرة */
 .phone-input-item {
-    flex: 1; /* يملأ المساحة المتاحة */
-    min-width: 250px; /* أقل عرض */
+    flex: 1; 
+    min-width: 250px; 
 }
 
-/* ضبط زر الـ Verify */
 .verify-btn {
     background-color: black;
     color: white;
@@ -83,7 +78,7 @@
     border-radius: 6px;
     font-weight: bold;
     text-align: center;
-    min-width: 120px; /* لضمان بقاء الزر بحجم مناسب */
+    min-width: 120px; 
 }
 
 
@@ -112,19 +107,19 @@
     }
 
     .phoneNumberVerfi .phoneMsg {
-        width: 80%; /* اجعل العرض 80% من الشاشة في الشاشات الصغيرة */
-        height: auto; /* السماح بمرونة الطول */
-        padding: 16px; /* تقليل الحشو الداخلي */
+        width: 80%; 
+        height: auto;  
+        padding: 16px; 
     }
 
     .numBg {
-        width: 60px; /* تصغير عرض الأرقام */
-        height: 80px; /* تصغير طول الأرقام */
-        border-radius: 12px; /* تقليل نصف القطر */
+        width: 60px; 
+        height: 80px; 
+        border-radius: 12px; 
     }
 
     .nums {
-        font-size: 36px; /* تصغير حجم النص */
+        font-size: 36px; 
     }
 
     .closeBtn {

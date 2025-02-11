@@ -7,7 +7,7 @@ export default function ResetPasswordPage() {
     const [message, setMessage] = useState(null);
     const [error, setError] = useState(null);
     const [searchParams] = useSearchParams();
-    const token = searchParams.get("token"); // استخراج التوكن من الرابط
+    const token = searchParams.get("token"); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();

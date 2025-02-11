@@ -13,19 +13,15 @@ export default function Letters4() {
 
     const [account, setAccount] = useState("USDT - wallet");
 
-    // تعديل: تعريف حالة للتحكم في ظهور وإخفاء القائمة
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // تعديل: تعريف حالة لتتبع العنصر النشط
     const [activeLink, setActiveLink] = useState('overview');
 
-    // تعديل: دالة لفتح وإغلاق القائمة
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen); // هذه السطر يقوم بتغيير الحالة بين true و false
+        setIsSidebarOpen(!isSidebarOpen); 
     };
-    // تعديل: دالة لتحديد العنصر النشط وإغلاق القائمة
     const handleLinkClick = (link) => {
-        setActiveLink(link); // تحديث العنصر النشط
-        setIsSidebarOpen(false); // إغلاق القائمة
+        setActiveLink(link); 
+        setIsSidebarOpen(false); 
     };
 
 

@@ -10,15 +10,15 @@ import SearchBar from '../../searchBar/searchBar';
 export default function Escrow3() {
     const [selectedAccount, setSelectedAccount] = useState('');
     const [activeLink, setActiveLink] = useState('');
-    const [showQRCode, setShowQRCode] = useState(false); // حالة جديدة للتحكم في ظهور QR Code
+    const [showQRCode, setShowQRCode] = useState(false); 
 
     const handleNavigation = (accountType) => {
         setSelectedAccount(accountType);
-        console.log(`Selected account type: ${accountType}`); // Logging selected account type
+        console.log(`Selected account type: ${accountType}`); 
     };
 
     const handleGenerateQRCode = () => {
-        setShowQRCode(true); // تغيير الحالة لإظهار QR Code
+        setShowQRCode(true); 
     };
     return (
         <>

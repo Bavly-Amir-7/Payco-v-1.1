@@ -9,13 +9,13 @@ import Calender from '../../calender/calender';
 
 function Business2() {
 
-    const [isModalOpen, setIsModalOpen] = useState(false); // حالة لفتح وغلق المودال
-    const [isModalOpen2, setIsModalOpen2] = useState(false); // حالة لفتح وغلق المودال
-    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); // لتحديث التاريخ
+    const [isModalOpen, setIsModalOpen] = useState(false); 
+    const [isModalOpen2, setIsModalOpen2] = useState(false); 
+    const [dateOfBirth, setDateOfBirth] = useState("1 / 31 / 1998"); 
 
     const handleDateChange = (newDate) => {
-        setDateOfBirth(newDate); // تحديث التاريخ بعد اختياره من Calender
-        setIsModalOpen(false); // إغلاق المودال
+        setDateOfBirth(newDate);
+        setIsModalOpen(false); 
     };
 
 
@@ -32,11 +32,9 @@ function Business2() {
 
 
 
-    // 🔹 تخزين الدول التي يتم جلبها من API
     const [countries, setCountries] = useState([]);
     const [countryCodes, setCountryCodes] = useState({});
 
-    // 🔹 تخزين الدول المختارة
     const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
     const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
     const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
