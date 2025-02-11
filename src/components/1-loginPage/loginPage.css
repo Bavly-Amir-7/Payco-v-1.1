@@ -34,3 +34,13 @@
 }
 
 
+/* إخفاء صورة الكمبيوتر على التابلت */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tablet-single {
+        grid-template-columns: 1fr !important; /* خليها عمود واحد في التابلت */
+    }
+
+    .computer {
+        display: none !important; /* اخفاء صورة الكمبيوتر */
+    }
+}

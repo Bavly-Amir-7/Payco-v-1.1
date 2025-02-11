@@ -50,8 +50,7 @@ input[type="email"]::placeholder, input[type="password"]::placeholder {
     color: #2D2D2D; /* Black placeholder text */
   }
 
-.lines{
-}
+
 
 
     /* Custom scrollbar styles */
@@ -109,3 +108,13 @@ input[type="email"]::placeholder, input[type="password"]::placeholder {
   
 }
 
+/* جعل التابلت بعمود واحد وإخفاء صورة الكمبيوتر */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .tablet-single {
+        grid-template-columns: 1fr !important; /* تحويل التابلت إلى عمود واحد */
+    }
+
+    .computer {
+        display: none !important; /* إخفاء صورة الكمبيوتر */
+    }
+}

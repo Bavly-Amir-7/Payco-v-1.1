@@ -332,16 +332,16 @@ export default function AccountVerification2() {
 
                                                 <span>|</span>
                                                 <select
-    value={selectedPhoneCountry}
-    onChange={(e) => setSelectedPhoneCountry(e.target.value)}
-    className="flex-1 outline-none text-sm w-full bg-transparent"
->
-    {countries.map(country => (
-        <option key={country.code} value={country.code}>
-            {country.name} ({country.callingCode})
-        </option>
-    ))}
-</select>
+                                                    value={selectedPhoneCountry}
+                                                    onChange={(e) => setSelectedPhoneCountry(e.target.value)}
+                                                    className="flex-1 outline-none text-sm w-full bg-transparent"
+                                                >
+                                                    {countries.map(country => (
+                                                        <option key={country.code} value={country.code}>
+                                                            {country.name} ({country.callingCode})
+                                                        </option>
+                                                    ))}
+                                                </select>
 
                                             </div>
 

@@ -57,13 +57,13 @@ export default function SignUpPage() {
         e.preventDefault();
         setError(null);
         setLoading(true);
-    
+
         if (!passwordValid.match) {
             setError("Passwords do not match");
             setLoading(false);
             return;
         }
-    
+
         try {
             const response = await fetch("/api/auth/signup", {
                 method: "POST",
@@ -72,21 +72,21 @@ export default function SignUpPage() {
                 },
                 body: JSON.stringify({ email, password }),
             });
-    
+
             const text = await response.text(); // Get raw response
-    
+
             console.log("Response text:", text); // Log response for debugging
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP Error! Status: ${response.status}, Message: ${text}`);
             }
-    
+
             if (!text) {
                 throw new Error("Empty response from server");
             }
-    
+
             const data = JSON.parse(text); // Parse JSON after checking if it's valid
-    
+
             alert("Signup successful! Please check your email for verification.");
             navigate("/login");
         } catch (err) {
@@ -95,15 +95,15 @@ export default function SignUpPage() {
         }
         setLoading(false);
     };
-    
+
 
     return (
         <div className="signUpBody">
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 h-screen tablet-single">
                 <div className="computer col-span-1 flex items-center justify-center">
                     <img src={image1} alt="Illustration of secure payment system with various security icons" className="w-2/3" />
                 </div>
-                <div className="loginArea col-span-1 flex items-center justify-center bg-gray-100 pt-2">
+                <div className="signArea col-span-1 flex items-center justify-center bg-gray-100 pt-2">
                     <div className="w-2/3">
                         <div className="text-start imageParent mb-3">
                             <img src={image2} alt="Payco Logo" className="mx-auto mb-3" />
@@ -209,7 +209,7 @@ export default function SignUpPage() {
                                 <div className="flex items-center border border-gray-300 rounded bg-white">
                                     {/* Icon */}
                                     <div className="flex items-center pl-3">
-                                    <svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg width="9" height="18" viewBox="0 0 9 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M4.47756 0.127203C4.05352 0.127643 3.64697 0.296287 3.34713 0.59613C3.04729 0.895973 2.87865 1.30252 2.87821 1.72656L2.87821 9.72878C2.03843 10.0325 1.31212 10.5867 0.797397 11.3164C0.282672 12.0462 0.00433908 12.9164 -1.88557e-07 13.8094C0.236485 19.5578 8.43312 19.564 8.67233 13.8093C8.66893 12.9714 8.42403 12.1522 7.96697 11.4498C7.5099 10.7475 6.86006 10.1918 6.09527 9.84934L6.66575 8.98114C6.7058 8.91991 6.7238 8.84686 6.71678 8.77404C6.70975 8.70121 6.67812 8.63295 6.6271 8.58051L5.39569 7.31202L6.62144 6.11235C6.68387 6.04922 6.71868 5.9639 6.71822 5.87512C6.71717 5.8311 6.70711 5.78777 6.68869 5.74778C6.67026 5.70779 6.64385 5.672 6.61107 5.6426L5.39884 4.55259L6.63213 3.21906C6.67884 3.16886 6.70827 3.10504 6.71613 3.03692C6.72399 2.9688 6.70986 2.89995 6.6758 2.84043L5.28792 0.404957C5.17986 0.304436 5.05188 0.22776 4.91227 0.17991C4.77267 0.132059 4.62455 0.114101 4.47756 0.127203ZM5.99961 2.95419L4.70505 4.3562C4.67646 4.38758 4.65433 4.42428 4.63993 4.46421C4.62553 4.50413 4.61914 4.54651 4.62112 4.58891C4.62311 4.63131 4.63343 4.6729 4.6515 4.71131C4.66956 4.74972 4.69502 4.78419 4.72642 4.81276L5.92577 5.89273L4.71699 7.07606C4.65607 7.13546 4.62122 7.21661 4.62011 7.30169C4.61899 7.38676 4.65168 7.4688 4.71102 7.52978L5.9861 8.84444L5.34165 9.8245C5.30508 9.88326 5.28805 9.95209 5.29301 10.0211C5.29796 10.0902 5.32465 10.1559 5.36924 10.2088C5.44579 10.2831 5.54159 10.3344 5.64581 10.3571C9.44009 11.8702 8.43086 17.4346 4.33611 17.502C3.44659 17.5014 2.58714 17.18 1.91557 16.5967C1.24399 16.0134 0.805372 15.2074 0.680248 14.3267C0.555123 13.4461 0.751892 12.5498 1.23442 11.8025C1.71696 11.0553 2.45286 10.5072 3.30702 10.2588C3.36809 10.2351 3.42092 10.194 3.45904 10.1407C3.49717 10.0874 3.51895 10.0241 3.52171 9.95866L3.52171 1.72655C3.52248 1.57479 3.55936 1.42538 3.62931 1.29069C3.69927 1.156 3.80027 1.0399 3.92398 0.951982C4.0477 0.864065 4.19056 0.806858 4.34076 0.785093C4.49096 0.763326 4.64419 0.777628 4.78777 0.826811L5.99961 2.95419Z" fill="#020202" />
                                             <path d="M2.95898 13.6932C2.9628 14.0105 3.09153 14.3136 3.31728 14.5366C3.54303 14.7597 3.8476 14.8848 4.16496 14.8848C4.48232 14.8848 4.78688 14.7597 5.01262 14.5366C5.23837 14.3136 5.3671 14.0105 5.3709 13.6932C5.36709 13.3758 5.23835 13.0728 5.0126 12.8497C4.78685 12.6267 4.48228 12.5016 4.16492 12.5016C3.84756 12.5016 3.543 12.6267 3.31726 12.8498C3.09151 13.0728 2.96279 13.3759 2.95898 13.6932ZM4.7274 13.6932C4.72522 13.8409 4.665 13.9819 4.55976 14.0856C4.45451 14.1893 4.31269 14.2474 4.16494 14.2474C4.01719 14.2474 3.87537 14.1893 3.77013 14.0856C3.66489 13.9819 3.60468 13.8409 3.60251 13.6932C3.6048 13.5455 3.66507 13.4047 3.7703 13.3011C3.87553 13.1975 4.01728 13.1394 4.16496 13.1394C4.31264 13.1394 4.45439 13.1975 4.55961 13.3011C4.66484 13.4047 4.72511 13.5455 4.7274 13.6932Z" fill="#020202" />
                                         </svg>
