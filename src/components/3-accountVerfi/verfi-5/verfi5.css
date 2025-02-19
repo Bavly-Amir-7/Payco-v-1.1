@@ -1,5 +1,5 @@
 /* صندوق التسجيل */
-.verfi5  .signup-container {
+.verfi5 .signup-container {
     background: #ffffff;
     padding: 32px;
     border-radius: 12px;
@@ -7,7 +7,7 @@
 }
 
 /* العناوين */
-.verfi5  .signup-container h2 {
+.verfi5 .signup-container h2 {
     font-size: 24px;
     font-weight: bold;
     color: #202020;
@@ -15,7 +15,7 @@
     margin-bottom: 10px;
 }
 
-.verfi5  .signup-container p {
+.verfi5 .signup-container p {
     font-size: 14px;
     color: #606060;
     text-align: center;
@@ -23,20 +23,20 @@
 }
 
 /* النموذج */
-.verfi5  .form-group {
+.verfi5 .form-group {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
 }
 
-.verfi5  .form-group label {
+.verfi5 .form-group label {
     font-weight: 500;
     margin-bottom: 5px;
     color: #404040;
 }
 
-.verfi5  .form-group input,
-.verfi5  .form-group select {
+.verfi5 .form-group input,
+.verfi5 .form-group select {
     width: 100%;
     padding: 12px;
     border-radius: 6px;
@@ -44,8 +44,8 @@
     transition: all 0.3s ease-in-out;
 }
 
-.verfi5  .form-group input:focus,
-.verfi5  .form-group select:focus {
+.verfi5 .form-group input:focus,
+.verfi5 .form-group select:focus {
     border-color: #C20101;
     box-shadow: 0px 0px 5px rgba(194, 1, 1, 0.3);
     outline: none;
@@ -57,25 +57,41 @@
 }
 
 
-/* تنسيق الأيقونات في العنوان */
-.verfi5  i {
+.verfi5 i {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 
-.verfi5-new-btns{
+.verfi5-new-btns {
     align-items: center;
 }
 
-/* تحسين العناصر في وضع الموبايل */
 @media (max-width: 768px) {
-    .verfi5  .signup-container {
+    .verfi5 .signup-container {
         padding: 20px;
     }
 
-   .verfi5   button {
+    .verfi5 .bg-light button {
         width: 100%;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        /* يمنع نزول العناصر تحت بعض */
+    }
+
+    .form-group>div {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .form-group input[type="checkbox"] {
+        margin-left: 8px;
+        /* يبعد الـ checkbox شوية عن النص */
     }
 }

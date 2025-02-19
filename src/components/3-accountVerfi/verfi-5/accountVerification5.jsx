@@ -511,10 +511,11 @@ export default function AccountVerification5() {
         <>
             <div className="container-fluid verfi5">
                 <div className="row" style={{ height: "100vh" }}>
-                    {/* Sidebar */}
-                    <div className="asideComponent col-lg-3 col-md-2 d-none d-md-block">
+             {/* Sidebar */}
+             <div className="asideComponent col-lg-3 col-md-2" style={{ height: "100%" }}>
                         <Aside />
                     </div>
+
 
 
                     <div className="col-12 col-lg-9 col-md-12">
@@ -663,19 +664,22 @@ export default function AccountVerification5() {
                                             />
                                         </div>
 
-                                        <div className="form-group d-flex align-items-center">
-                                        <label className="mb-0 text-nowrap d-flex align-items-center">
-                                        I consent to provide my phone number in international format.
-                                                <input
-                                                    type="checkbox"
-                                                    name="phone_number_consent_granted"
-                                                    /* checked={formData.phone_number_consent_granted}
-                                                    onChange={handleChange} */
-                                                    required
-                                                    className="ms-2" // يضيف مسافة بين النص والـ checkbox
-                                                />
-                                            </label>
+                                        <div className="form-group d-flex ">
+                                            <div className="d-flex ">
+                                                <div>
+                                                    I consent to provide my phone number in international format.
+                                                </div>
+                                                <label className="mb-0 d-flex">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="phone_number_consent_granted"
+                                                        required
+                                                        className="ms-2"
+                                                    />
+                                                </label>
+                                            </div>
                                         </div>
+
 
 
                                         <div className="form-group">

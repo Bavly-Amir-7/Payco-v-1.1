@@ -66,7 +66,7 @@ export default function Business1() {
             <div className="container-fluid">
                 <div className="row" style={{ height: "100vh" }}>
                     {/* Sidebar */}
-                    <div className="asideComponent col-lg-3 col-md-2 d-none d-md-block">
+                    <div className="asideComponent col-lg-3 col-md-2" style={{ height: "100%" }}>
                         <Aside />
                     </div>
 
