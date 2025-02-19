@@ -56,6 +56,8 @@ import ForgetPasswordPage from './components/forgetPassword/forgetPassword';
 import ResetPasswordPage from './components/resetPassword/resetPassword';
 import SearchBar from './components/searchBar/searchBar';
 import AccountVerification222 from './components/test';
+import AccountVerification5 from './components/3-accountVerfi/verfi-5/accountVerification5';
+import OnfidoVerification from './components/3-accountVerfi/verfi-5/OnfidoVerification';
 function App() {
   return (
     <>
@@ -67,6 +69,8 @@ function App() {
           <Route path="verfi222" element={<AccountVerification222/>} />
           <Route path="verfi3" element={<AccountVerification3/>} />
           <Route path="verfi4" element={<AccountVerification4/>} />
+          <Route path="verfi5" element={<AccountVerification5/>} />
+          <Route path="on" element={<OnfidoVerification/>} />
           <Route path="business1" element={<Business1/>} />
           <Route path="business2" element={<Business2/>} />
           <Route path="business3" element={<Business3/>} />
