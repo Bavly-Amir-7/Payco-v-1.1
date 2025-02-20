@@ -669,7 +669,7 @@ export default function AccountVerification5() {
                                         </div>
 
 
-                                        <div className="w-full">
+                                        <div className="w-full mt-3">
                                             {/* Last Name Input Field */}
                                             <label className="block mb-2 whitespace-nowrap text-sm">Last Name*</label>
                                             <div className="iconGap flex items-center borderInput rounded p-2">
@@ -700,7 +700,7 @@ export default function AccountVerification5() {
                                         </div>
 
 
-                                        <div className="w-full grid gap-1 mb-4">
+                                        <div className="w-full grid gap-1 mb-4 mt-3">
                                             {/* Email Input Field */}
                                             <label className="block mb-2 text-sm">Email*</label>
                                             <div className="d-flex mail">
@@ -946,7 +946,7 @@ export default function AccountVerification5() {
 */}
 
 
-                                        <div className="w-full">
+                                        <div className="w-full mt-2">
                                             <label className="block mb-2 text-sm whitespace-nowrap">Address Line Two (Optional)</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
                                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -971,7 +971,7 @@ export default function AccountVerification5() {
 */}
 
 
-                                        <div className="w-full">
+                                        <div className="w-full mt-2">
                                             <label className="block mb-2 text-sm">City/Town*</label>
                                             <div className="flex iconGap items-center borderInput rounded p-2">
                                                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1016,7 +1016,7 @@ export default function AccountVerification5() {
                         </div>
                     )} */}
 
-                                        <div className="form-group postCode ">
+                                        <div className="form-group postCode mt-2">
                                             <label>Postal Code</label>
                                             <input className=' postCodeInput '
                                                 type="text"
