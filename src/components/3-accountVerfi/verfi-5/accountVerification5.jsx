@@ -806,7 +806,7 @@ export default function AccountVerification5() {
                                                     <i>
                                                         {countries.length > 0 ? countries.find(country => country.code === selectedPhoneCountry)?.flag : ''}
                                                     </i>
-                                                    <span>|</span>
+                                                    <span className='pl-2'>|</span>
                                                     <select
                                                         value={selectedPhoneCountry}
                                                         onChange={(e) => setSelectedPhoneCountry(e.target.value)}
@@ -855,6 +855,9 @@ export default function AccountVerification5() {
     </div>
     */}
                                         </div>
+
+
+
 
 
                                         <div className="form-group d-flex ">
