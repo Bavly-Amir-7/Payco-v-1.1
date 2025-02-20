@@ -506,13 +506,80 @@ export default function AccountVerification5() {
 
 
 
+    const [selectedCountry, setSelectedCountry] = useState('GB'); // Default to UK
+    const [selectedPhoneCountry, setSelectedPhoneCountry] = useState('GB');
+
+    const [countryCodes, setCountryCodes] = useState({});
+
+    const [countries, setCountries] = useState([]);
+
+    const [isPhoneVerfiVisible, setIsPhoneVerfiVisible] = useState(false);
+    const [randomNumbers, setRandomNumbers] = useState([]);
+    const [phoneCode, setPhoneCode] = useState('');
+
+
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch('https://restcountries.com/v3.1/all');
+                const data = await response.json();
+                const countryList = data.map(country => ({
+                    code: country.cca2,
+                    name: country.name.common,
+                    flag: <img src={country.flags.svg} alt={country.name.common} className="w-6 h-4" />,
+                    callingCode: country.idd?.root ? `${country.idd.root}${country.idd.suffixes ? country.idd.suffixes[0] : ''}` : 'N/A'
+                })).sort((a, b) => a.name.localeCompare(b.name));
+
+                const countryCodeMap = {};
+                countryList.forEach(country => {
+                    countryCodeMap[country.code] = country.callingCode || 'N/A';
+                });
+
+                setCountries(countryList);
+                setCountryCodes(countryCodeMap);
+            } catch (error) {
+                console.error('Error fetching countries:', error);
+            }
+        };
+
+        fetchCountries();
+    }, []);
+
+
+    useEffect(() => {
+        if (selectedPhoneCountry && countryCodes[selectedPhoneCountry]) {
+            setPhoneCode(countryCodes[selectedPhoneCountry]); // ❌ 
+        }
+    }, [selectedPhoneCountry, countryCodes]);
+
+
+    
+        const handleFirstCountryChange = (event) => {
+            setSelectedFirstCountry(event.target.value);
+        };
+
+        const handleSecondCountryChange = (event) => {
+            if (event.target.value !== selectedFirstCountry) {
+                setSelectedSecondCountry(event.target.value);
+            }
+        };
+        const handleThirdCountryChange = (event) => {
+            if (event.target.value !== selectedFirstCountry) {
+                setSelectedThirdCountry(event.target.value);
+            }
+        };
+    const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
+    const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
+    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');    
+
 
     return (
         <>
             <div className="container-fluid verfi5">
                 <div className="row" style={{ height: "100vh" }}>
-             {/* Sidebar */}
-             <div className="asideComponent col-lg-3 col-md-2" style={{ height: "100%" }}>
+                    {/* Sidebar */}
+                    <div className="asideComponent col-lg-3 col-md-2" style={{ height: "100%" }}>
                         <Aside />
                     </div>
 
@@ -571,38 +638,117 @@ export default function AccountVerification5() {
 
                                     {/* {!showVerification ? ( */}
                                     <form /* onSubmit={handleSubmit} */>
-                                        <div className="form-group">
-                                            <label>First Name</label>
-                                            <input
-                                                type="text"
-                                                name="first_name"
-                                                /* value={formData.first_name}
-                                                onChange={handleChange} */
-                                                required
-                                            />
+                                        <div className="w-full">
+                                            {/* First Name Input Field */}
+                                            <label className="block mb-2 whitespace-nowrap text-sm">First Name*</label>
+                                            <div className="iconGap flex items-center borderInput rounded p-2">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clipPath="url(#clip0_3373_226)">
+                                                        <path d="M9 9C9.89002 9 10.76 8.73608 11.5001 8.24162C12.2401 7.74715 12.8169 7.04434 13.1575 6.22208C13.4981 5.39981 13.5872 4.49501 13.4135 3.6221C13.2399 2.74918 12.8113 1.94736 12.182 1.31802C11.5526 0.688685 10.7508 0.260102 9.87791 0.0864683C9.00499 -0.0871652 8.10019 0.00194979 7.27792 0.342544C6.45566 0.683138 5.75285 1.25991 5.25839 1.99994C4.76392 2.73996 4.5 3.60999 4.5 4.5C4.50119 5.69311 4.97568 6.83701 5.81934 7.68067C6.66299 8.52432 7.80689 8.99881 9 9ZM9 1.5C9.59334 1.5 10.1734 1.67595 10.6667 2.00559C11.1601 2.33524 11.5446 2.80377 11.7716 3.35195C11.9987 3.90013 12.0581 4.50333 11.9424 5.08527C11.8266 5.66722 11.5409 6.20177 11.1213 6.62132C10.7018 7.04088 10.1672 7.3266 9.58527 7.44236C9.00333 7.55811 8.40013 7.4987 7.85195 7.27164C7.30377 7.04458 6.83524 6.66006 6.50559 6.16671C6.17595 5.67337 6 5.09335 6 4.5C6 3.70435 6.31607 2.94129 6.87868 2.37868C7.44129 1.81607 8.20435 1.5 9 1.5Z" fill="#2D2D2D" />
+                                                        <path d="M9 10.5C7.2104 10.502 5.49466 11.2138 4.22922 12.4792C2.96378 13.7447 2.25199 15.4604 2.25 17.25C2.25 17.4489 2.32902 17.6397 2.46967 17.7803C2.61032 17.921 2.80109 18 3 18C3.19891 18 3.38968 17.921 3.53033 17.7803C3.67098 17.6397 3.75 17.4489 3.75 17.25C3.75 15.8576 4.30312 14.5223 5.28769 13.5377C6.27226 12.5531 7.60761 12 9 12C10.3924 12 11.7277 12.5531 12.7123 13.5377C13.6969 14.5223 14.25 15.8576 14.25 17.25C14.25 17.4489 14.329 17.6397 14.4697 17.7803C14.6103 17.921 14.8011 18 15 18C15.1989 18 15.3897 17.921 15.5303 17.7803C15.671 17.6397 15.75 17.4489 15.75 17.25C15.748 15.4604 15.0362 13.7447 13.7708 12.4792C12.5053 11.2138 10.7896 10.502 9 10.5Z" fill="#2D2D2D" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_3373_226">
+                                                            <rect width="18" height="18" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <span>|</span>
+
+                                                {/* Backend First Name Input */}
+                                                <input
+                                                    type="text"
+                                                    name="first_name"
+                                                    className="flex-1 outline-none placeholder:text-sm w-full"
+                                                    placeholder="Changable"
+                                                    /* value={formData.first_name}
+                                                    onChange={handleChange} */
+                                                    required
+                                                />
+                                            </div>
                                         </div>
 
-                                        <div className="form-group">
-                                            <label>Last Name</label>
-                                            <input
-                                                type="text"
-                                                name="last_name"
-                                                /* value={formData.last_name}
-                                                onChange={handleChange} */
-                                                required
-                                            />
+
+                                        <div className="w-full">
+                                            {/* Last Name Input Field */}
+                                            <label className="block mb-2 whitespace-nowrap text-sm">Last Name*</label>
+                                            <div className="iconGap flex items-center borderInput rounded p-2">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clipPath="url(#clip0_3373_226)">
+                                                        <path d="M9 9C9.89002 9 10.76 8.73608 11.5001 8.24162C12.2401 7.74715 12.8169 7.04434 13.1575 6.22208C13.4981 5.39981 13.5872 4.49501 13.4135 3.6221C13.2399 2.74918 12.8113 1.94736 12.182 1.31802C11.5526 0.688685 10.7508 0.260102 9.87791 0.0864683C9.00499 -0.0871652 8.10019 0.00194979 7.27792 0.342544C6.45566 0.683138 5.75285 1.25991 5.25839 1.99994C4.76392 2.73996 4.5 3.60999 4.5 4.5C4.50119 5.69311 4.97568 6.83701 5.81934 7.68067C6.66299 8.52432 7.80689 8.99881 9 9ZM9 1.5C9.59334 1.5 10.1734 1.67595 10.6667 2.00559C11.1601 2.33524 11.5446 2.80377 11.7716 3.35195C11.9987 3.90013 12.0581 4.50333 11.9424 5.08527C11.8266 5.66722 11.5409 6.20177 11.1213 6.62132C10.7018 7.04088 10.1672 7.3266 9.58527 7.44236C9.00333 7.55811 8.40013 7.4987 7.85195 7.27164C7.30377 7.04458 6.83524 6.66006 6.50559 6.16671C6.17595 5.67337 6 5.09335 6 4.5C6 3.70435 6.31607 2.94129 6.87868 2.37868C7.44129 1.81607 8.20435 1.5 9 1.5Z" fill="#2D2D2D" />
+                                                        <path d="M9 10.5C7.2104 10.502 5.49466 11.2138 4.22922 12.4792C2.96378 13.7447 2.25199 15.4604 2.25 17.25C2.25 17.4489 2.32902 17.6397 2.46967 17.7803C2.61032 17.921 2.80109 18 3 18C3.19891 18 3.38968 17.921 3.53033 17.7803C3.67098 17.6397 3.75 17.4489 3.75 17.25C3.75 15.8576 4.30312 14.5223 5.28769 13.5377C6.27226 12.5531 7.60761 12 9 12C10.3924 12 11.7277 12.5531 12.7123 13.5377C13.6969 14.5223 14.25 15.8576 14.25 17.25C14.25 17.4489 14.329 17.6397 14.4697 17.7803C14.6103 17.921 14.8011 18 15 18C15.1989 18 15.3897 17.921 15.5303 17.7803C15.671 17.6397 15.75 17.4489 15.75 17.25C15.748 15.4604 15.0362 13.7447 13.7708 12.4792C12.5053 11.2138 10.7896 10.502 9 10.5Z" fill="#2D2D2D" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_3373_226">
+                                                            <rect width="18" height="18" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <span>|</span>
+
+                                                {/* Backend Last Name Input */}
+                                                <input
+                                                    type="text"
+                                                    name="last_name"
+                                                    className="flex-1 outline-none placeholder:text-sm w-full"
+                                                    placeholder="Changable"
+                                                    /* value={formData.last_name}
+                                                    onChange={handleChange} */
+                                                    required
+                                                />
+                                            </div>
                                         </div>
 
-                                        <div className="form-group">
-                                            <label>Email</label>
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                /* value={formData.email}
-                                                onChange={handleChange} */
-                                                required
-                                            />
+
+                                        <div className="w-full grid gap-1 mb-4">
+                                            {/* Email Input Field */}
+                                            <label className="block mb-2 text-sm">Email*</label>
+                                            <div className="d-flex mail">
+                                                <div className="mailArea labelStyles iconGap flex items-center borderInput rounded p-2 w-full">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <g clipPath="url(#clip0_3373_5338)">
+                                                            <path d="M16.8442 6.07484L11.6512 1.09784C10.9475 0.401465 9.99799 0.00992606 9.00793 0.00782103C8.01787 0.00571601 7.06672 0.393214 6.36 1.08659L1.155 6.07484C0.790961 6.42547 0.501122 6.84569 0.302707 7.31055C0.104292 7.77541 0.00135017 8.27541 0 8.78084L0 14.2498C0.00119089 15.244 0.396661 16.1972 1.09966 16.9002C1.80267 17.6032 2.7558 17.9987 3.75 17.9998H14.25C15.2442 17.9987 16.1973 17.6032 16.9003 16.9002C17.6033 16.1972 17.9988 15.244 18 14.2498V8.78084C17.9987 8.27534 17.8957 7.77527 17.6971 7.31039C17.4986 6.84551 17.2085 6.42532 16.8442 6.07484ZM7.40925 2.15834C7.83453 1.73684 8.40971 1.50135 9.00848 1.5036C9.60725 1.50585 10.1806 1.74565 10.6027 2.17034L15.663 7.01834L10.5907 12.0913C10.162 12.5001 9.59236 12.7281 9 12.7281C8.40764 12.7281 7.83801 12.5001 7.40925 12.0913L2.33625 7.01834L7.40925 2.15834ZM16.5 14.2498C16.5 14.8466 16.2629 15.4189 15.841 15.8408C15.419 16.2628 14.8467 16.4998 14.25 16.4998H3.75C3.15326 16.4998 2.58097 16.2628 2.15901 15.8408C1.73705 15.4189 1.5 14.8466 1.5 14.2498V8.78084C1.50076 8.63525 1.51557 8.49008 1.54425 8.34734L6.34875 13.1518C7.05429 13.8505 8.00708 14.2424 9 14.2424C9.99292 14.2424 10.9457 13.8505 11.6512 13.1518L16.4557 8.34734C16.4844 8.49008 16.4992 8.63525 16.5 8.78084V14.2498Z" fill="#2D2D2D" />
+                                                        </g>
+                                                        <defs>
+                                                            <clipPath id="clip0_3373_5338">
+                                                                <rect width="18" height="18" fill="white" />
+                                                            </clipPath>
+                                                        </defs>
+                                                    </svg>
+                                                    <span>|</span>
+
+                                                    {/* Backend Email Input - Disabled for now */}
+                                                    {/* <input
+                type="email"
+                name="email"
+                className="flex-1 outline-none placeholder:text-sm w-full"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+            /> */}
+                                                </div>
+                                                <button
+                                                    className="verfBtn bg-gray-200 text-gray-700 px-4 py-2 rounded ml-2"
+                                                // onClick={handleVerifyEmail}
+                                                >
+                                                    Verify
+                                                </button>
+                                            </div>
+
+                                            {/* Email Verification Input */}
+                                            {/* <input
+        type="text"
+        className="flex-1 outline-none placeholder:text-sm w-full mt-2 p-2 border rounded"
+        placeholder="Enter verification token"
+        value={verificationToken}
+        onChange={(e) => setVerificationToken(e.target.value)}
+    /> */}
+
+                                            {/* Display backend message if exists */}
+                                            {/* {message && <p className="text-center text-sm mt-2">{message}</p>} */}
                                         </div>
+
 
 
                                         {/********************** i changed this beause of the modal  *****************/}
@@ -652,17 +798,64 @@ export default function AccountVerification5() {
 
 
 
-                                        <div className="form-group">
-                                            <label>Phone Number</label>
-                                            <input
-                                                type="text"
-                                                name="phone_number"
-                                                /* value={formData.phone_number}
-                                                onChange={handleChange} */
-                                                placeholder="+14155552671"
-                                                required
-                                            />
+                                        <div className="w-full grid gap-1 mb-4">
+                                            <label className="block mb-2 text-sm">Phone Number*</label>
+                                            <div className="phone-input-container w-100 ">
+                                                {/* Country Selector */}
+                                                <div className="phone-input-item flex items-center borderInput rounded p-2">
+                                                    <i>
+                                                        {countries.length > 0 ? countries.find(country => country.code === selectedPhoneCountry)?.flag : ''}
+                                                    </i>
+                                                    <span>|</span>
+                                                    <select
+                                                        value={selectedPhoneCountry}
+                                                        onChange={(e) => setSelectedPhoneCountry(e.target.value)}
+                                                        className="flex-1 outline-none text-sm w-full bg-transparent"
+                                                    >
+                                                        {countries.map(country => (
+                                                            <option key={country.code} value={country.code}>
+                                                                {country.name} ({country.callingCode})
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+
+                                                {/* Phone Number Input */}
+                                                <div className="phone-input-item flex items-center borderInput rounded p-2">
+                                                    <span className="text-sm text-gray-700 pr-2">
+                                                        {countryCodes[selectedPhoneCountry]}
+                                                    </span>
+                                                    <input
+                                                        type="number"
+                                                        className="flex-1 outline-none text-sm w-full"
+                                                        placeholder="Enter your phone number"
+                                                        style={{ borderLeft: '1px solid #ddd', paddingLeft: '8px' }}
+                                                    />
+                                                </div>
+
+                                                {/* Verify Button */}
+                                                <button className="verify-btn">Verify</button>
+                                            </div>
+                                            <p className="text-center text-sm">
+                                                Tap “Verify” to receive a code. Enter it below to confirm your phone number.
+                                            </p>
+
+                                            {/* Backend Code - Commented Out */}
+                                            {/* 
+    <div className="form-group">
+        <label>Phone Number</label>
+        <input
+            type="text"
+            name="phone_number"
+            // value={formData.phone_number}
+            // onChange={handleChange}
+            placeholder="+14155552671"
+            required
+        />
+    </div>
+    */}
                                         </div>
+
 
                                         <div className="form-group d-flex ">
                                             <div className="d-flex ">
@@ -682,21 +875,25 @@ export default function AccountVerification5() {
 
 
 
-                                        <div className="form-group">
-                                            <label>Nationality</label>
-                                            <select
-                                                name="nationality"
-                                                /* value={formData.nationality}
-                                                onChange={handleChange} */
-                                                required
-                                            >
-                                                <option value="">Select Nationality</option>
-                                                {/* {Object.entries(countryOptions).map(([code, name]) => (
-                                <option key={code} value={code}>
-                                    {name}
-                                </option>
-                            ))} */}
-                                            </select>
+                                        <div>
+                                            <label className="block mb-2 text-sm">Nationality*</label>
+                                            <div className="flex iconGap items-center borderInput rounded p-2">
+                                                <i>
+                                                    {countries.find((country) => country.code === selectedSecondCountry)?.flag}
+                                                </i>
+                                                <span>|</span>
+                                                <select
+                                                    value={selectedSecondCountry}
+                                                    onChange={handleSecondCountryChange}
+                                                    className="flex-1 outline-none text-sm w-full bg-transparent"
+                                                >
+                                                    {countries.map((country) => (
+                                                        <option key={country.code} value={country.code}>
+                                                            {country.name}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
                                         </div>
 
                                         <div className="form-group">
