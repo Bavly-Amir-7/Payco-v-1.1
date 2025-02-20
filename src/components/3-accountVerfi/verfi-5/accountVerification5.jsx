@@ -554,24 +554,24 @@ export default function AccountVerification5() {
     }, [selectedPhoneCountry, countryCodes]);
 
 
-    
-        const handleFirstCountryChange = (event) => {
-            setSelectedFirstCountry(event.target.value);
-        };
 
-        const handleSecondCountryChange = (event) => {
-            if (event.target.value !== selectedFirstCountry) {
-                setSelectedSecondCountry(event.target.value);
-            }
-        };
-        const handleThirdCountryChange = (event) => {
-            if (event.target.value !== selectedFirstCountry) {
-                setSelectedThirdCountry(event.target.value);
-            }
-        };
+    const handleFirstCountryChange = (event) => {
+        setSelectedFirstCountry(event.target.value);
+    };
+
+    const handleSecondCountryChange = (event) => {
+        if (event.target.value !== selectedFirstCountry) {
+            setSelectedSecondCountry(event.target.value);
+        }
+    };
+    const handleThirdCountryChange = (event) => {
+        if (event.target.value !== selectedFirstCountry) {
+            setSelectedThirdCountry(event.target.value);
+        }
+    };
     const [selectedFirstCountry, setSelectedFirstCountry] = useState('GB');
     const [selectedSecondCountry, setSelectedSecondCountry] = useState('GB');
-    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');    
+    const [selectedThirdCountry, setSelectedThirdCountry] = useState('GB');
 
 
     return (
@@ -897,7 +897,7 @@ export default function AccountVerification5() {
                                         </div>
 
                                         <div className="form-group">
-                                            <label>Country of Residence</label>
+                                            <label className=''>Country of Residence</label>
                                             <select
                                                 name="location.country_of_residence"
                                                 /* value={formData.location.country_of_residence}
@@ -913,38 +913,86 @@ export default function AccountVerification5() {
                                             </select>
                                         </div>
 
-                                        <h3>Address</h3>
-                                        <div className="form-group">
-                                            <label>Address Line 1 (Building number and Street)</label>
-                                            <input
-                                                type="text"
-                                                name="address.line1"
-                                                /* value={formData.address.line1}
-                                                onChange={handleChange} */
-                                                required
-                                            />
+
+
+
+                                        <div className="w-full">
+                                            <label className="block mb-2 text-sm whitespace-nowrap">Address Line Two (Optional)</label>
+                                            <div className="flex iconGap items-center borderInput rounded p-2">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fillRule="evenodd" clipRule="evenodd" d="M5.53188 3.64437C6.49162 2.71478 7.64764 2.25 9 2.25C10.3524 2.25 11.5029 2.7095 12.4518 3.62852C13.4006 4.54754 13.875 5.66197 13.875 6.97183C13.875 7.62676 13.706 8.37676 13.3679 9.22183C13.0298 10.0669 12.6208 10.8592 12.1409 11.5986C11.6611 12.338 11.1867 13.0299 10.7177 13.6743C10.2487 14.3187 9.85067 14.831 9.52349 15.2113L9 15.75C8.86913 15.6021 8.69463 15.4067 8.47651 15.1637C8.25839 14.9208 7.86577 14.4349 7.29866 13.706C6.73154 12.9771 6.23532 12.2694 5.80998 11.5827C5.38465 10.8961 4.99748 10.1197 4.64849 9.25352C4.29949 8.38732 4.125 7.62676 4.125 6.97183C4.125 5.66197 4.59396 4.55282 5.53188 3.64437Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M9.75 7.125C9.75 7.53921 9.41421 7.875 9 7.875C8.58579 7.875 8.25 7.53921 8.25 7.125C8.25 6.71079 8.58579 6.375 9 6.375C9.41421 6.375 9.75 6.71079 9.75 7.125Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <span>|</span>
+                                                <input type="text" className="flex-1 outline-none placeholder:text-sm w-full" placeholder="Changable" />
+                                            </div>
                                         </div>
 
-                                        <div className="form-group">
-                                            <label>Address Line 2 (Optional)</label>
-                                            <input
-                                                type="text"
-                                                name="address.line2"
-                                            /* value={formData.address.line2}
-                                            onChange={handleChange} */
-                                            />
+                                        {/* 
+<h3>Address</h3>
+<div className="form-group">
+    <label>Address Line 1 (Building number and Street)</label>
+    <input className=''
+        type="text"
+        name="address.line1"
+        // value={formData.address.line1}
+        // onChange={handleChange}
+        required
+    />
+</div> 
+*/}
+
+
+                                        <div className="w-full">
+                                            <label className="block mb-2 text-sm whitespace-nowrap">Address Line Two (Optional)</label>
+                                            <div className="flex iconGap items-center borderInput rounded p-2">
+                                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fillRule="evenodd" clipRule="evenodd" d="M5.53188 3.64437C6.49162 2.71478 7.64764 2.25 9 2.25C10.3524 2.25 11.5029 2.7095 12.4518 3.62852C13.4006 4.54754 13.875 5.66197 13.875 6.97183C13.875 7.62676 13.706 8.37676 13.3679 9.22183C13.0298 10.0669 12.6208 10.8592 12.1409 11.5986C11.6611 12.338 11.1867 13.0299 10.7177 13.6743C10.2487 14.3187 9.85067 14.831 9.52349 15.2113L9 15.75C8.86913 15.6021 8.69463 15.4067 8.47651 15.1637C8.25839 14.9208 7.86577 14.4349 7.29866 13.706C6.73154 12.9771 6.23532 12.2694 5.80998 11.5827C5.38465 10.8961 4.99748 10.1197 4.64849 9.25352C4.29949 8.38732 4.125 7.62676 4.125 6.97183C4.125 5.66197 4.59396 4.55282 5.53188 3.64437Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M9.75 7.125C9.75 7.53921 9.41421 7.875 9 7.875C8.58579 7.875 8.25 7.53921 8.25 7.125C8.25 6.71079 8.58579 6.375 9 6.375C9.41421 6.375 9.75 6.71079 9.75 7.125Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <span>|</span>
+                                                <input type="text" className="flex-1 outline-none placeholder:text-sm w-full" placeholder="Changable" />
+                                            </div>
                                         </div>
 
-                                        <div className="form-group">
-                                            <label>Town/City</label>
-                                            <input
-                                                type="text"
-                                                name="address.town"
-                                                /* value={formData.address.town}
-                                                onChange={handleChange} */
-                                                required
-                                            />
+                                        {/* 
+<div className="form-group">
+    <label>Address Line 2 (Optional)</label>
+    <input
+        type="text"
+        name="address.line2"
+        // value={formData.address.line2}
+        // onChange={handleChange}
+    />
+</div> 
+*/}
+
+
+                                        <div className="w-full">
+                                            <label className="block mb-2 text-sm">City/Town*</label>
+                                            <div className="flex iconGap items-center borderInput rounded p-2">
+                                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fillRule="evenodd" clipRule="evenodd" d="M8.04283 4.85915C9.32248 3.61971 10.8639 3 12.667 3C14.4701 3 16.0042 3.61267 17.2693 4.83803C18.5344 6.06339 19.167 7.54929 19.167 9.29577C19.167 10.169 18.9416 11.169 18.4908 12.2958C18.04 13.4225 17.4947 14.4789 16.8549 15.4648C16.2151 16.4507 15.5825 17.3732 14.9573 18.2324C14.332 19.0916 13.8012 19.7746 13.365 20.2817L12.667 21C12.4925 20.8028 12.2598 20.5423 11.969 20.2183C11.6782 19.8944 11.1547 19.2465 10.3985 18.2746C9.64238 17.3028 8.98075 16.3592 8.41364 15.4437C7.84652 14.5282 7.33031 13.493 6.86498 12.338C6.39965 11.1831 6.16699 10.169 6.16699 9.29577C6.16699 7.54929 6.79227 6.07043 8.04283 4.85915Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M13.667 9.5C13.667 10.0523 13.2193 10.5 12.667 10.5C12.1147 10.5 11.667 10.0523 11.667 9.5C11.667 8.94772 12.1147 8.5 12.667 8.5C13.2193 8.5 13.667 8.94772 13.667 9.5Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                <span>|</span>
+                                                <input type="text" className="flex-1 outline-none placeholder:text-sm w-full" placeholder="London" />
+                                            </div>
                                         </div>
+
+                                        {/* 
+<div className="form-group">
+    <label>Town/City</label>
+    <input
+        type="text"
+        name="address.town"
+        // value={formData.address.town}
+        // onChange={handleChange}
+        required
+    />
+</div> 
+*/}
+
 
                                         {/* {isUSResidence && (
                         <div className="form-group">
@@ -965,9 +1013,9 @@ export default function AccountVerification5() {
                         </div>
                     )} */}
 
-                                        <div className="form-group">
+                                        <div className="form-group postCode ">
                                             <label>Postal Code</label>
-                                            <input
+                                            <input className=' postCodeInput '
                                                 type="text"
                                                 name="address.postcode"
                                                 /* value={formData.address.postcode}
