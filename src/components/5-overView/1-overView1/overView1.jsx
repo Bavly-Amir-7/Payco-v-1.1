@@ -207,9 +207,14 @@ export default function OverView1() {
                     <div className="col-12 col-lg-9 col-md-12 mt-5" style={{ placeItems: "center" }}>
 
                         <div className="">
-                          
-                        <SearchBar />
 
+                            <SearchBar />
+
+
+                            <div className="alert-box bg-red-100 text-red-800 p-4 rounded-lg mb-4 flex flex-col md:flex-row justify-between items-center">
+                                <span className="mb-3 md:mb-0">You need to verify your account to access all features.</span>
+                                <Link to="/verfi1" className="redBg text-white px-4 py-2 rounded-lg mt-1">Verify Now</Link>
+                                </div>
                             <div className="flex justify-between">
 
                                 <h1 className="text-2xl font-bold mb-2">Welcome back, John</h1>
@@ -288,15 +293,15 @@ export default function OverView1() {
                                                     const barwidth = 15;
 
                                                     const d = `
-                                                        M${x + radius},${y} 
-                                                        h${barwidth - 2 * radius} 
+                                                        M${x + radius},${y}
+                                                        h${barwidth - 2 * radius}
                                                         a${radius},${radius} 0 0 1 ${radius},${radius}
-                                                        v${height - 2 * radius} 
-                                                        a${radius},${radius} 0 0 1 ${-radius},${radius} 
-                                                        h${2 * radius - barwidth} 
-                                                        a${radius},${radius} 0 0 1 ${-radius},${-radius} 
-                                                        v${2 * radius - height} 
-                                                        a${radius},${radius} 0 0 1 ${radius},${-radius} 
+                                                        v${height - 2 * radius}
+                                                        a${radius},${radius} 0 0 1 ${-radius},${radius}
+                                                        h${2 * radius - barwidth}
+                                                        a${radius},${radius} 0 0 1 ${-radius},${-radius}
+                                                        v${2 * radius - height}
+                                                        a${radius},${radius} 0 0 1 ${radius},${-radius}
                                                         z
                                                     `;
 
