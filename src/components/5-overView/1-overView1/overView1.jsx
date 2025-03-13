@@ -212,7 +212,7 @@ export default function OverView1() {
 
 
                             <div className="alert-box bg-red-100 text-red-800 p-4 rounded-lg mb-4 flex flex-col md:flex-row justify-between items-center">
-                                <span className="mb-3 md:mb-0">You need to verify your account to access all features.</span>
+                                <span className="">You need to verify your account to access all features.</span>
                                 <Link to="/verfi1" className="redBg text-white px-4 py-2 rounded-lg mt-1">Verify Now</Link>
                                 </div>
                             <div className="flex justify-between">
